@@ -1,15 +1,9 @@
 import React from 'react';
 
 import ListItem from '~/components/ListItem';
-import ActionHeader from '~/components/ActionHeader';
+import ListContentBox from '~/components/ListContentBox';
 
-import {
-  Container,
-  AppTitle,
-  ChampionshipsBox,
-  ChampionshipsListBox,
-  ChampionshipsList,
-} from './styles';
+import { Container, AppTitle } from './styles';
 
 const list = [
   {
@@ -62,20 +56,12 @@ const renderChampionships = ({ item }) => {
 const Main = () => (
   <Container>
     <AppTitle>iLab</AppTitle>
-    <ChampionshipsBox>
-      <ActionHeader
-        counter={list.length}
-        title="Campeonatos"
-        action={{ icon: 'add-circle', onPress: () => console.log('oi') }}
-      />
-      <ChampionshipsListBox>
-        <ChampionshipsList
-          data={list}
-          renderItem={renderChampionships}
-          keyExtractor={item => item.id}
-        />
-      </ChampionshipsListBox>
-    </ChampionshipsBox>
+    <ListContentBox
+      title="Camponatos"
+      onAction={() => console.log('Vai para tela de ADD campeonato')}
+      data={list}
+      renderItem={renderChampionships}
+    />
   </Container>
 );
 

@@ -1,16 +1,10 @@
 import React from 'react';
 
 import ListItem from '~/components/ListItem';
-import ActionHeader from '~/components/ActionHeader';
+import ListContentBox from '~/components/ListContentBox';
 
 import {
-  Container,
-  Header,
-  HeaderIcon,
-  HeaderTitle,
-  ChampionshipsBox,
-  ChampionshipsListBox,
-  ChampionshipsList,
+  Container, Header, HeaderIcon, HeaderTitle,
 } from './styles';
 
 const list = [
@@ -67,34 +61,18 @@ const Championship = () => (
       <HeaderIcon name="arrow-back" />
       <HeaderTitle>iLab</HeaderTitle>
     </Header>
-    <ChampionshipsBox>
-      <ActionHeader
-        counter={list.length}
-        title="Times"
-        action={{ icon: 'add-circle', onPress: () => console.log('oi') }}
-      />
-      <ChampionshipsListBox>
-        <ChampionshipsList
-          data={list}
-          renderItem={renderChampionships}
-          keyExtractor={item => item.id}
-        />
-      </ChampionshipsListBox>
-    </ChampionshipsBox>
-    <ChampionshipsBox>
-      <ActionHeader
-        counter={list.length}
-        title="Jogos"
-        action={{ icon: 'add-circle', onPress: () => console.log('oi') }}
-      />
-      <ChampionshipsListBox>
-        <ChampionshipsList
-          data={list}
-          renderItem={renderChampionships}
-          keyExtractor={item => item.id}
-        />
-      </ChampionshipsListBox>
-    </ChampionshipsBox>
+    <ListContentBox
+      title="Times"
+      onAction={() => console.log('Vai para tela de ADD time')}
+      data={list}
+      renderItem={renderChampionships}
+    />
+    <ListContentBox
+      title="Jogos"
+      onAction={() => console.log('Vai para tela de ADD jogo')}
+      data={list}
+      renderItem={renderChampionships}
+    />
   </Container>
 );
 

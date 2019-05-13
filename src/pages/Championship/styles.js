@@ -1,4 +1,3 @@
-import { FlatList } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
@@ -27,19 +26,4 @@ export const HeaderTitle = styled.Text`
   font-size: 24px;
   font-weight: bold;
   margin-left: 20px;
-`;
-
-export const ChampionshipsBox = styled.View`
-  flex: 1;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-export const ChampionshipsListBox = styled.ScrollView`
-  width: 100%;
-`;
-
-export const ChampionshipsList = styled(FlatList)`
-  flex: 1;
-  width: 100%;
 `;
