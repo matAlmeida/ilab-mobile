@@ -1,3 +1,4 @@
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -19,17 +20,11 @@ export const ChampionshipsBox = styled.View`
   align-items: center;
 `;
 
-export const ChampionshipsTitle = styled.Text`
-  color: #222;
-  height: 44px;
+export const ChampionshipsListBox = styled.ScrollView`
   width: 100%;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
 `;
 
-export const ChampionshipsList = styled.View`
+export const ChampionshipsList = styled(FlatList)`
   flex: 1;
   width: 100%;
 `;
