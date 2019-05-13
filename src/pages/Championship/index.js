@@ -1,79 +1,53 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import Header from '~/components/Header';
 import ListItem from '~/components/ListItem';
 import ListContentBox from '~/components/ListContentBox';
 
-import {
-  Container, Header, HeaderIcon, HeaderTitle,
-} from './styles';
+import { Container } from './styles';
 
-const list = [
-  {
-    id: '1',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '2',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '3',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '4',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '5',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '6',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '7',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '8',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-];
+import { backAction } from '~/utils/navigation';
 
 const renderChampionships = ({ item }) => {
   const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
   return <ListItem name={item.title} forePictureURI={item.pictureURI} backPictureURI={ballImage} />;
 };
 
-const Championship = () => (
+const Championship = ({ teamsList, gamesList, navigation }) => (
   <Container>
-    <Header>
-      <HeaderIcon name="arrow-back" />
-      <HeaderTitle>iLab</HeaderTitle>
-    </Header>
+    <Header
+      title="iLab"
+      leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+    />
     <ListContentBox
       title="Times"
-      onAction={() => console.log('Vai para tela de ADD time')}
-      data={list}
+      onAction={() => navigation.navigate('NewTeam')}
+      data={teamsList}
       renderItem={renderChampionships}
+      style={{ marginBottom: 20 }}
     />
     <ListContentBox
       title="Jogos"
-      onAction={() => console.log('Vai para tela de ADD jogo')}
-      data={list}
+      onAction={() => navigation.navigate('NewGame')}
+      data={gamesList}
       renderItem={renderChampionships}
     />
   </Container>
 );
+
+Championship.propTypes = {
+  teamsList: PropTypes.array,
+  gamesList: PropTypes.array,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    dispatch: PropTypes.func,
+  }).isRequired,
+};
+
+Championship.defaultProps = {
+  teamsList: [],
+  gamesList: [],
+};
 
 export default Championship;

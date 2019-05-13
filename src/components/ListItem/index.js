@@ -10,8 +10,10 @@ import {
   ListItemName,
 } from './styles';
 
-const ListItem = ({ name, forePictureURI, backPictureURI }) => (
-  <Container>
+const ListItem = ({
+  name, forePictureURI, backPictureURI, ...rest
+}) => (
+  <Container {...rest}>
     <ListItemImageBox>
       <ListItemSportPicture
         source={{

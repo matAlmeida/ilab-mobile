@@ -1,68 +1,49 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import Header from '~/components/Header';
 import ListItem from '~/components/ListItem';
 import ListContentBox from '~/components/ListContentBox';
 
-import { Container, AppTitle } from './styles';
+import { Container } from './styles';
 
-const list = [
-  {
-    id: '1',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '2',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '3',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '4',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '5',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '6',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '7',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-  {
-    id: '8',
-    title: 'Barclays Premier',
-    pictureURI: 'http://cdn.24.co.za/files/Cms/General/d/2634/0c47acf0bbff4208837c1b6e6706d478.jpg',
-  },
-];
+const Main = ({ navigation, championshipsList }) => {
+  const renderChampionships = ({ item: championship }) => {
+    const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
 
-const renderChampionships = ({ item }) => {
-  const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
-  return <ListItem name={item.title} forePictureURI={item.pictureURI} backPictureURI={ballImage} />;
+    return (
+      <ListItem
+        name={championship.name}
+        forePictureURI={championship.pictureURI}
+        backPictureURI={ballImage}
+        onPress={navigation.navigate('Championship', { championship })}
+      />
+    );
+  };
+
+  return (
+    <Container>
+      <Header title="iLab" />
+      <ListContentBox
+        title="Camponatos"
+        onAction={() => navigation.navigate('NewChampionship')}
+        data={championshipsList}
+        renderItem={renderChampionships}
+      />
+    </Container>
+  );
 };
 
-const Main = () => (
-  <Container>
-    <AppTitle>iLab</AppTitle>
-    <ListContentBox
-      title="Camponatos"
-      onAction={() => console.log('Vai para tela de ADD campeonato')}
-      data={list}
-      renderItem={renderChampionships}
-    />
-  </Container>
-);
+Main.propTypes = {
+  championshipsList: PropTypes.array,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    dispatch: PropTypes.func,
+  }).isRequired,
+};
+
+Main.defaultProps = {
+  championshipsList: [],
+};
 
 export default Main;
