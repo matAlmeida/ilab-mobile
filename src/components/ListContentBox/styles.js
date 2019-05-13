@@ -19,7 +19,7 @@ export const List = styled(FlatList)`
 `;
 
 export const EmptyText = styled.Text`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   color: ${Colors.lightGray};
   text-align: center;

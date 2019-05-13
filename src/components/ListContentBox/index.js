@@ -28,8 +28,11 @@ const ListContentBox = ({
       </HeaderActionButton>
     </HeaderContainer>
     <ListBox>
-      {!data && <EmptyText>Nenhum Item nessa Lista</EmptyText>}
-      {!!data && <List data={data} renderItem={renderItem} keyExtractor={keyExtractor} />}
+      {data.length > 0 ? (
+        <List data={data} renderItem={renderItem} keyExtractor={keyExtractor} />
+      ) : (
+        <EmptyText>Nenhum item nessa lista</EmptyText>
+      )}
     </ListBox>
   </Container>
 );
