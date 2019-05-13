@@ -9,12 +9,12 @@ export const Container = styled.TouchableOpacity`
   padding: 10px;
 `;
 
-export const ChampionshipImageBox = styled.View`
+export const ListItemImageBox = styled.View`
   flex-direction: row;
   height: 55px;
 `;
 
-export const ChampionshipPicture = styled.Image`
+export const ListItemPicture = styled.Image`
   height: 55px;
   width: 55px;
   border-radius: 27px;
@@ -22,7 +22,7 @@ export const ChampionshipPicture = styled.Image`
   border-color: #222;
 `;
 
-export const ChampionshipSportPicture = styled.Image`
+export const ListItemSportPicture = styled.Image`
   height: 55px;
   width: 55px;
   border-radius: 27px;
@@ -32,13 +32,13 @@ export const ChampionshipSportPicture = styled.Image`
   left: 38px;
 `;
 
-export const ChampionshipNameBox = styled.View`
+export const ListItemNameBox = styled.View`
   flex: 1;
   justify-content: center;
   padding-left: ${55 - 17}px;
 `;
 
-export const ChampionshipName = styled.Text`
+export const ListItemName = styled.Text`
   color: #222;
   text-align: center;
   font-size: 18px;
