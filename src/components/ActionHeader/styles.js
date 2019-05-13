@@ -28,7 +28,7 @@ export const HeaderIcon = styled(Icon).attrs({
 
 export const HeaderTitle = styled.Text`
   color: #222;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
 `;
