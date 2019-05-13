@@ -18,7 +18,7 @@ const Header = ({ title, leftIcon }) => (
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-  leftIcon: PropTypes.objectOf({ name: PropTypes.string, onPress: PropTypes.func }),
+  leftIcon: PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
 };
 
 Header.defaultProps = {
