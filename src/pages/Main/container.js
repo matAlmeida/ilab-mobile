@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getAllChampionships } from '~/services/database';
+import { getAllChampionships, deleteChampionship } from '~/services/database';
 
 function withChampionshipData(WrappedComponent) {
   return class extends React.Component {
@@ -10,15 +10,24 @@ function withChampionshipData(WrappedComponent) {
       this.reloadChampionships();
     }
 
+    handleDelete = (championship) => {
+      deleteChampionship({ id: championship.id })
+        .then(() => {
+          this.reloadChampionships();
+        })
+        .catch(error => console.error(error));
+    };
+
     reloadChampionships = () => {
       this.setState({ loadingChampionship: true });
       getAllChampionships()
         .then((newChampionshipsList) => {
+          console.log(newChampionshipsList);
           this.setState({ championshipsList: newChampionshipsList, loadingChampionship: false });
         })
         .catch((error) => {
           console.error(error);
-          this.setState({ loadingChampionship: false });
+          this.setState({ loadingChampionship: false, championshipsList: [] });
         });
     };
 
@@ -31,6 +40,7 @@ function withChampionshipData(WrappedComponent) {
           championshipsList={championshipsList}
           onRefresh={this.reloadChampionships}
           refresing={loadingChampionship}
+          onDelete={this.handleDelete}
         />
       );
     }

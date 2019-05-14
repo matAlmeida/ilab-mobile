@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
@@ -11,8 +12,23 @@ import { withChampionshipData } from './container';
 import ballImage from '~/assets/soccer-ball.jpg';
 
 const Main = ({
-  navigation, championshipsList, onRefresh, refreshing,
+  navigation, championshipsList, onRefresh, refreshing, onDelete,
 }) => {
+  const removeItem = (championship) => {
+    Alert.alert(
+      'Remover Campeonato',
+      `Tem certeza que deseja remover "${championship.name}"?`,
+      [
+        { text: 'Não', style: 'cancel' },
+        {
+          text: 'Sim',
+          onPress: () => onDelete(championship),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
   // eslint-disable-next-line react/prop-types
   const renderChampionships = ({ item: championship }) => (
     <ListItem
@@ -20,6 +36,7 @@ const Main = ({
       forePicture={{ uri: championship.pictureURI }}
       backPicture={ballImage}
       onPress={() => navigation.navigate('Championship', { championship })}
+      onLongPress={() => removeItem(championship)}
     />
   );
 
@@ -41,6 +58,7 @@ const Main = ({
 Main.propTypes = {
   championshipsList: PropTypes.array,
   onRefresh: PropTypes.func,
+  onDelete: PropTypes.func,
   refreshing: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
@@ -51,6 +69,7 @@ Main.propTypes = {
 Main.defaultProps = {
   championshipsList: [],
   onRefresh: undefined,
+  onDelete: undefined,
   refreshing: false,
 };
 

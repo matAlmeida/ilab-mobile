@@ -23,10 +23,12 @@ const Championship = ({ teamsList, gamesList, navigation }) => {
     );
   };
 
+  const { name } = navigation.state.params.championship;
+
   return (
     <Container>
       <Header
-        title="iLab"
+        title={name}
         leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
       />
       <ListContentBox

@@ -22,12 +22,9 @@ export const insertNewChampionship = ({ name, pictureURI, id }) => new Promise((
 export const deleteChampionship = ({ id }) => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {
-      console.log('deleting...');
       realm.write(() => {
         const championship = realm.objectForPrimaryKey(CHAMPIONSHIP_SCHEMA, id);
-        console.log('deleting:', championship);
         realm.delete(championship);
-        console.log('deleted!');
         resolve();
       });
     })
