@@ -29,6 +29,7 @@
     "reactotron-react-native": "^3.5.0",
     "reactotron-redux": "^3.1.0",
     "reactotron-redux-saga": "^4.2.2",
+    "realm": "^2.27.0-rc.3",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
     "reduxsauce": "^1.1.0",
