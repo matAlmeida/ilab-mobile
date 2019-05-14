@@ -9,32 +9,42 @@ import { Container } from './styles';
 
 import { backAction } from '~/utils/navigation';
 
-const renderChampionships = ({ item }) => {
-  const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
-  return <ListItem name={item.title} forePictureURI={item.pictureURI} backPictureURI={ballImage} />;
-};
+const Championship = ({ teamsList, gamesList, navigation }) => {
+  // eslint-disable-next-line react/prop-types
+  const renderItem = path => ({ item }) => {
+    const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
+    return (
+      <ListItem
+        name={item.title}
+        forePictureURI={item.pictureURI}
+        backPictureURI={ballImage}
+        onPress={navigation.navigate(path, { item })}
+      />
+    );
+  };
 
-const Championship = ({ teamsList, gamesList, navigation }) => (
-  <Container>
-    <Header
-      title="iLab"
-      leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
-    />
-    <ListContentBox
-      title="Times"
-      onAction={() => navigation.navigate('NewTeam')}
-      data={teamsList}
-      renderItem={renderChampionships}
-      style={{ marginBottom: 20 }}
-    />
-    <ListContentBox
-      title="Jogos"
-      onAction={() => navigation.navigate('NewGame')}
-      data={gamesList}
-      renderItem={renderChampionships}
-    />
-  </Container>
-);
+  return (
+    <Container>
+      <Header
+        title="iLab"
+        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+      />
+      <ListContentBox
+        title="Times"
+        onAction={() => navigation.navigate('NewTeam')}
+        data={teamsList}
+        renderItem={renderItem('Team')}
+        style={{ marginBottom: 20 }}
+      />
+      <ListContentBox
+        title="Jogos"
+        onAction={() => navigation.navigate('NewGame')}
+        data={gamesList}
+        renderItem={renderItem('Game')}
+      />
+    </Container>
+  );
+};
 
 Championship.propTypes = {
   teamsList: PropTypes.array,
