@@ -8,6 +8,7 @@ import ListContentBox from '~/components/ListContentBox';
 import { Container } from './styles';
 
 const Main = ({ navigation, championshipsList }) => {
+  // eslint-disable-next-line react/prop-types
   const renderChampionships = ({ item: championship }) => {
     const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
 
@@ -25,7 +26,7 @@ const Main = ({ navigation, championshipsList }) => {
     <Container>
       <Header title="iLab" />
       <ListContentBox
-        title="Camponatos"
+        title="Campeonatos"
         onAction={() => navigation.navigate('NewChampionship')}
         data={championshipsList}
         renderItem={renderChampionships}
