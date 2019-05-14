@@ -6,21 +6,21 @@ import ListItem from '~/components/ListItem';
 import ListContentBox from '~/components/ListContentBox';
 
 import { Container } from './styles';
+import { withChampionshipData } from './container';
 
-const Main = ({ navigation, championshipsList }) => {
+import ballImage from '~/assets/soccer-ball.jpg';
+
+const Main = ({ navigation, championshipsList, onRefresh }) => {
   // eslint-disable-next-line react/prop-types
-  const renderChampionships = ({ item: championship }) => {
-    const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
-
-    return (
-      <ListItem
-        name={championship.name}
-        forePictureURI={championship.pictureURI}
-        backPictureURI={ballImage}
-        onPress={navigation.navigate('Championship', { championship })}
-      />
-    );
-  };
+  const renderChampionships = ({ item: championship }) => (
+    <ListItem
+      name={championship.name}
+      forePicture={{ uri: championship.pictureURI }}
+      backPicture={ballImage}
+      onPress={() => navigation.navigate('Championship', { championship })}
+      onRefresh={onRefresh}
+    />
+  );
 
   return (
     <Container>
@@ -37,6 +37,7 @@ const Main = ({ navigation, championshipsList }) => {
 
 Main.propTypes = {
   championshipsList: PropTypes.array,
+  onRefresh: PropTypes.func,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     dispatch: PropTypes.func,
@@ -45,6 +46,7 @@ Main.propTypes = {
 
 Main.defaultProps = {
   championshipsList: [],
+  onRefresh: undefined,
 };
 
-export default Main;
+export default withChampionshipData(Main);

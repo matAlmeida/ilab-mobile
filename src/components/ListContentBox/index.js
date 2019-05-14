@@ -7,6 +7,7 @@ import {
   ListBox,
   List,
   EmptyText,
+  RefreshButton,
   HeaderContainer,
   HeaderListCounter,
   HeaderTitle,
@@ -17,7 +18,7 @@ import {
 const defaultKeyExtractor = item => item.id;
 
 const ListContentBox = ({
-  title, data, renderItem, onAction, keyExtractor, style,
+  title, data, renderItem, onAction, keyExtractor, style, onRefresh,
 }) => (
   <Container style={style}>
     <HeaderContainer>
@@ -31,7 +32,9 @@ const ListContentBox = ({
       {data.length > 0 ? (
         <List data={data} renderItem={renderItem} keyExtractor={keyExtractor} />
       ) : (
-        <EmptyText>Nenhum item nessa lista</EmptyText>
+        <RefreshButton onPress={onRefresh}>
+          <EmptyText>Nenhum item nessa lista. Recarregar?</EmptyText>
+        </RefreshButton>
       )}
     </ListBox>
   </Container>
@@ -42,6 +45,7 @@ ListContentBox.propTypes = {
   data: PropTypes.array,
   renderItem: PropTypes.func,
   onAction: PropTypes.func,
+  onRefresh: PropTypes.func,
   keyExtractor: PropTypes.func,
   style: ViewPropTypes.style,
 };
@@ -50,6 +54,7 @@ ListContentBox.defaultProps = {
   data: [],
   renderItem: undefined,
   onAction: undefined,
+  onRefresh: undefined,
   keyExtractor: defaultKeyExtractor,
   style: {},
 };

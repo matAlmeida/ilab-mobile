@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
@@ -11,20 +12,12 @@ import {
 } from './styles';
 
 const ListItem = ({
-  name, forePictureURI, backPictureURI, ...rest
+  name, forePicture, backPicture, ...rest
 }) => (
   <Container {...rest}>
     <ListItemImageBox>
-      <ListItemSportPicture
-        source={{
-          uri: backPictureURI,
-        }}
-      />
-      <ListItemPicture
-        source={{
-          uri: forePictureURI,
-        }}
-      />
+      <ListItemSportPicture source={backPicture} />
+      <ListItemPicture source={forePicture} />
     </ListItemImageBox>
     <ListItemNameBox>
       <ListItemName>{name}</ListItemName>
@@ -32,10 +25,14 @@ const ListItem = ({
   </Container>
 );
 
-export default ListItem;
-
 ListItem.propTypes = {
   name: PropTypes.string.isRequired,
-  forePictureURI: PropTypes.string.isRequired,
-  backPictureURI: PropTypes.string.isRequired,
+  forePicture: Image.propTypes.source.isRequired,
+  backPicture: Image.propTypes.source,
 };
+
+ListItem.defaultProps = {
+  backPicture: {},
+};
+
+export default ListItem;

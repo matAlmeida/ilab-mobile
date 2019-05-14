@@ -25,6 +25,10 @@ export const EmptyText = styled.Text`
   text-align: center;
 `;
 
+export const RefreshButton = styled.TouchableOpacity`
+  padding: 0 20px;
+`;
+
 export const HeaderContainer = styled.View`
   width: 100%;
   flex-direction: row;
