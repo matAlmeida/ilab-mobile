@@ -4,14 +4,16 @@ import Colors from '~/constants/Colors';
 
 export const Container = styled.View`
   flex: 1;
+  width: 100%;
+  align-items: center;
 `;
 
 export const AddButton = styled.TouchableOpacity`
   height: 44px;
-  background-color: ${Colors.tintColor};
+  background-color: ${props => (props.disabled ? Colors.lightGray : Colors.tintColor)};
   justify-content: center;
   align-items: center;
-  margin: 0 20px;
+  padding: 0 20px;
   border-radius: 4px;
 `;
 
