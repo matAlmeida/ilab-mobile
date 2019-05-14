@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewPropTypes } from 'react-native';
+import { ViewPropTypes, RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 
 import {
@@ -18,7 +18,14 @@ import {
 const defaultKeyExtractor = item => item.id;
 
 const ListContentBox = ({
-  title, data, renderItem, onAction, keyExtractor, style, onRefresh,
+  title,
+  data,
+  renderItem,
+  onAction,
+  keyExtractor,
+  style,
+  onRefresh,
+  refreshing,
 }) => (
   <Container style={style}>
     <HeaderContainer>
@@ -30,7 +37,12 @@ const ListContentBox = ({
     </HeaderContainer>
     <ListBox>
       {data.length > 0 ? (
-        <List data={data} renderItem={renderItem} keyExtractor={keyExtractor} />
+        <List
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
+        />
       ) : (
         <RefreshButton onPress={onRefresh}>
           <EmptyText>Nenhum item nessa lista. Recarregar?</EmptyText>
@@ -46,6 +58,7 @@ ListContentBox.propTypes = {
   renderItem: PropTypes.func,
   onAction: PropTypes.func,
   onRefresh: PropTypes.func,
+  refreshing: PropTypes.bool,
   keyExtractor: PropTypes.func,
   style: ViewPropTypes.style,
 };
@@ -55,6 +68,7 @@ ListContentBox.defaultProps = {
   renderItem: undefined,
   onAction: undefined,
   onRefresh: undefined,
+  refreshing: false,
   keyExtractor: defaultKeyExtractor,
   style: {},
 };
