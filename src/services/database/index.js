@@ -19,12 +19,27 @@ export const insertNewChampionship = ({ name, pictureURI, id }) => new Promise((
     .catch(error => reject(error));
 });
 
+export const deleteChampionship = ({ id }) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      console.log('deleting...');
+      realm.write(() => {
+        const championship = realm.objectForPrimaryKey(CHAMPIONSHIP_SCHEMA, id);
+        console.log('deleting:', championship);
+        realm.delete(championship);
+        console.log('deleted!');
+        resolve();
+      });
+    })
+    .catch(error => reject(error));
+});
+
 export const getAllChampionships = () => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {
-      const allChampionships = realm.objects(CHAMPIONSHIP_SCHEMA);
+      const allChampionships = Array.from(realm.objects(CHAMPIONSHIP_SCHEMA));
 
-      resolve(Array.from(allChampionships));
+      resolve(JSON.parse(JSON.stringify(allChampionships)));
     })
     .catch(error => reject(error));
 });
