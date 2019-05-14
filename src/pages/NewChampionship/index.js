@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import * as uuid from 'uuid';
 
 import Header from '~/components/Header';
 import TextInput from '~/components/TextInput';
@@ -14,7 +13,6 @@ import { insertNewChampionship } from '~/services/database';
 
 const addChampionship = ({ name, pictureURI }, dispatch) => {
   insertNewChampionship({
-    id: uuid.v4(),
     name,
     pictureURI,
   })

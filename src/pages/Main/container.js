@@ -11,7 +11,7 @@ function withChampionshipData(WrappedComponent) {
     }
 
     handleDelete = (championship) => {
-      deleteChampionship({ id: championship.id })
+      deleteChampionship({ championshipId: championship.id })
         .then(() => {
           this.reloadChampionships();
         })
