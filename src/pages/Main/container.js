@@ -22,7 +22,6 @@ function withChampionshipData(WrappedComponent) {
       this.setState({ loadingChampionship: true });
       getAllChampionships()
         .then((newChampionshipsList) => {
-          console.log(newChampionshipsList);
           this.setState({ championshipsList: newChampionshipsList, loadingChampionship: false });
         })
         .catch((error) => {

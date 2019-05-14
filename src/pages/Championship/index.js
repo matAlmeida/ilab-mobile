@@ -24,6 +24,7 @@ const Championship = ({ teamsList, gamesList, navigation }) => {
   };
 
   const { name } = navigation.state.params.championship;
+  console.log(navigation.state.params.championship);
 
   return (
     <Container>
