@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
@@ -12,8 +13,23 @@ import ballImage from '~/assets/soccer-ball.jpg';
 import { backAction } from '~/utils/navigation';
 
 const Championship = ({
-  teamsList, gamesList, navigation, onRefresh, refreshing,
+  teamsList, gamesList, navigation, onRefresh, refreshing, onDelete,
 }) => {
+  const removeItem = (item, type) => {
+    Alert.alert(
+      `Remover ${type}`,
+      `Tem certeza que deseja remover "${item.name}"?`,
+      [
+        { text: 'Não', style: 'cancel' },
+        {
+          text: 'Sim',
+          onPress: () => onDelete({ [type.toLowerCase()]: item }),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
   // eslint-disable-next-line react/prop-types
   const renderItem = path => ({ item }) => (
     <ListItem
@@ -21,6 +37,7 @@ const Championship = ({
       forePicture={{ uri: item.pictureURI }}
       backPicture={ballImage}
       onPress={() => navigation.navigate(path, { item })}
+      onLongPress={() => removeItem(item, path)}
     />
   );
 
@@ -43,7 +60,9 @@ const Championship = ({
       />
       <ListContentBox
         title="Jogos"
-        onAction={() => navigation.navigate('NewGame')}
+        onAction={() => navigation.navigate('NewGame', { championship })}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
         data={gamesList}
         renderItem={renderItem('Game')}
       />
@@ -55,6 +74,7 @@ Championship.propTypes = {
   teamsList: PropTypes.array,
   gamesList: PropTypes.array,
   onRefresh: PropTypes.func,
+  onDelete: PropTypes.func,
   refreshing: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
@@ -66,6 +86,7 @@ Championship.defaultProps = {
   teamsList: [],
   gamesList: [],
   onRefresh: undefined,
+  onDelete: undefined,
   refreshing: false,
 };
 

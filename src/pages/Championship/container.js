@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getChampionship } from '~/services/database';
+import { getChampionship, deleteTeam } from '~/services/database';
 
 function withChampionshipData(WrappedComponent) {
   return class extends React.Component {
@@ -16,6 +16,18 @@ function withChampionshipData(WrappedComponent) {
         this.reloadChampionshipInfo();
       });
     }
+
+    handleDelete = ({ team, game }) => {
+      if (team) {
+        deleteTeam({ teamId: team.id })
+          .then(() => {
+            this.reloadChampionshipInfo();
+          })
+          .catch(error => console.error(error));
+      } else if (game) {
+        console.warn('deleteGame - TODO');
+      }
+    };
 
     reloadChampionshipInfo = () => {
       // eslint-disable-next-line react/prop-types
@@ -43,6 +55,7 @@ function withChampionshipData(WrappedComponent) {
           gamesList={championship.games}
           onRefresh={this.reloadChampionships}
           refresing={loadingChampionship}
+          onDelete={this.handleDelete}
         />
       );
     }
