@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getChampionship, deleteTeam } from '~/services/database';
+import { getChampionship, deleteTeam, deleteGame } from '~/services/database';
 
 function withChampionshipData(WrappedComponent) {
   return class extends React.Component {
@@ -25,7 +25,11 @@ function withChampionshipData(WrappedComponent) {
           })
           .catch(error => console.error(error));
       } else if (game) {
-        console.warn('deleteGame - TODO');
+        deleteGame({ gameId: game.id })
+          .then(() => {
+            this.reloadChampionshipInfo();
+          })
+          .catch(error => console.error(error));
       }
     };
 
