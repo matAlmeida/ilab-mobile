@@ -2,7 +2,7 @@ import Realm from 'realm';
 import * as uuid from 'uuid';
 import database, { CHAMPIONSHIP_SCHEMA, TEAM_SCHEMA } from './config';
 
-const proxyToArray = proxyObject => JSON.parse(JSON.stringify(Array.from(proxyObject)));
+const proxyToArray = proxyObject => JSON.parse(JSON.stringify(proxyObject));
 
 export default new Realm(database);
 
@@ -42,7 +42,11 @@ export const getChampionship = ({ championshipId }) => new Promise((resolve, rej
       realm.write(() => {
         const championship = realm.objectForPrimaryKey(CHAMPIONSHIP_SCHEMA, championshipId);
 
-        resolve(proxyToArray(championship));
+        const retChampionship = proxyToArray(championship);
+        retChampionship.teams = proxyToArray(Array.from(championship.teams));
+        retChampionship.games = proxyToArray(Array.from(championship.games));
+
+        resolve(retChampionship);
       });
     })
     .catch(error => reject(error));
@@ -51,7 +55,7 @@ export const getChampionship = ({ championshipId }) => new Promise((resolve, rej
 export const getAllChampionships = () => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {
-      const allChampionships = proxyToArray(realm.objects(CHAMPIONSHIP_SCHEMA));
+      const allChampionships = proxyToArray(Array.from(realm.objects(CHAMPIONSHIP_SCHEMA)));
 
       resolve(allChampionships);
     })
@@ -64,6 +68,7 @@ export const insertNewTeam = ({ championshipId, name, pictureURI }) => new Promi
       realm.write(() => {
         const newTeam = {
           id: uuid.v4(),
+          championshipId,
           name,
           pictureURI,
           createdAt: new Date(),

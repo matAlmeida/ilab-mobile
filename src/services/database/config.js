@@ -23,7 +23,7 @@ const TeamSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    championship: { type: 'linkingObjects', objectType: CHAMPIONSHIP_SCHEMA, property: 'teams' },
+    championshipId: 'string',
     name: 'string',
     createdAt: 'date',
     pictureURI: 'string',
@@ -36,7 +36,7 @@ const PlayerSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    team: { type: 'linkingObjects', objectType: TEAM_SCHEMA, property: 'players' },
+    teamId: 'string',
     name: 'string',
     createdAt: 'date',
     pictureURI: 'string',
@@ -52,12 +52,12 @@ const GameSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    championship: { type: 'linkingObjects', objectType: CHAMPIONSHIP_SCHEMA, property: 'games' },
+    championshipId: 'string',
     createdAt: 'date',
     date: 'date',
     done: { type: 'bool', default: false },
-    home_id: 'string',
-    away_id: 'string',
+    homeId: 'string',
+    awayId: 'string',
     plays: { type: 'list', objectType: PLAY_SCHEMA },
   },
 };
@@ -67,7 +67,7 @@ const PlaySchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    game: { type: 'linkingObjects', objectType: GAME_SCHEMA, property: 'plays' },
+    gameId: 'string',
     type: 'string',
     finished_at: 'int',
     udas: { type: 'list', objectType: UDA_SCHEMA },
@@ -77,16 +77,16 @@ const PlaySchema = {
 const UDASchema = {
   name: UDA_SCHEMA,
   properties: {
-    play: { type: 'linkingObjects', objectType: PLAY_SCHEMA, property: 'udas' },
-    sender_id: 'string',
-    receiver_id: 'string',
+    playId: 'string',
+    senderId: 'string',
+    receiverId: 'string',
   },
 };
 
 export default {
   path: 'iLab.realm',
   schema: [ChampionshipSchema, TeamSchema, PlayerSchema, GameSchema, PlaySchema, UDASchema],
-  schemaVersion: 1,
+  schemaVersion: 3,
 };
 
 export {
