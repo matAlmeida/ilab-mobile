@@ -10,7 +10,7 @@ import ListContentBox from '~/components/ListContentBox';
 import { Container } from './styles';
 import { withChampionshipData } from './container';
 
-import ballImage from '~/assets/soccer-ball.jpg';
+import teamIcon from '~/assets/team-icon.png';
 import { backAction } from '~/utils/navigation';
 
 const Championship = ({
@@ -36,7 +36,7 @@ const Championship = ({
     <ListItem
       name={item.name}
       forePicture={{ uri: item.pictureURI }}
-      backPicture={ballImage}
+      backPicture={teamIcon}
       onPress={() => navigation.navigate(path, { item })}
       onLongPress={() => removeItem(item, path)}
     />
