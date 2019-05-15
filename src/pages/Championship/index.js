@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
 import ListItem from '~/components/ListItem';
+import ListGameItem from '~/components/ListGameItem';
 import ListContentBox from '~/components/ListContentBox';
 
 import { Container } from './styles';
@@ -41,6 +42,15 @@ const Championship = ({
     />
   );
 
+  // eslint-disable-next-line react/prop-types
+  const renderGameItem = path => ({ item }) => (
+    <ListGameItem
+      game={item}
+      onPress={() => navigation.navigate(path, { item })}
+      onLongPress={() => removeItem(item, path)}
+    />
+  );
+
   const { championship } = navigation.state.params;
 
   return (
@@ -64,7 +74,7 @@ const Championship = ({
         onRefresh={onRefresh}
         refreshing={refreshing}
         data={gamesList}
-        renderItem={renderItem('Game')}
+        renderItem={renderGameItem('Game')}
       />
     </Container>
   );
