@@ -9,7 +9,6 @@ import {
   ListItemNameBox,
   ListItemName,
 } from './styles';
-import { fetchGame } from './container';
 
 const ListGameItem = ({ homeTeam, awayTeam, ...rest }) => (
   <Container {...rest}>
@@ -31,4 +30,4 @@ ListGameItem.propTypes = {
   awayTeam: PropTypes.object.isRequired,
 };
 
-export default fetchGame(ListGameItem);
+export default ListGameItem;

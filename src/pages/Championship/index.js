@@ -43,13 +43,21 @@ const Championship = ({
   );
 
   // eslint-disable-next-line react/prop-types
-  const renderGameItem = path => ({ item }) => (
-    <ListGameItem
-      game={item}
-      onPress={() => navigation.navigate(path, { item })}
-      onLongPress={() => removeItem(item, path)}
-    />
-  );
+  const renderGameItem = (path, teams) => ({ item }) => {
+    const { homeId, awayId } = item;
+    const homeTeam = teams.find(team => team.id === homeId);
+    const awayTeam = teams.find(team => team.id === awayId);
+
+    return (
+      <ListGameItem
+        game={item}
+        homeTeam={homeTeam}
+        awayTeam={awayTeam}
+        onPress={() => navigation.navigate(path, { item })}
+        onLongPress={() => removeItem(item, path)}
+      />
+    );
+  };
 
   const { championship } = navigation.state.params;
 
@@ -74,7 +82,7 @@ const Championship = ({
         onRefresh={onRefresh}
         refreshing={refreshing}
         data={gamesList}
-        renderItem={renderGameItem('Game')}
+        renderItem={renderGameItem('Game', teamsList)}
       />
     </Container>
   );
