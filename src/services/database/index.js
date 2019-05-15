@@ -1,6 +1,6 @@
 import Realm from 'realm';
 import * as uuid from 'uuid';
-import database, { CHAMPIONSHIP_SCHEMA, TEAM_SCHEMA } from './config';
+import database, { CHAMPIONSHIP_SCHEMA, TEAM_SCHEMA, GAME_SCHEMA } from './config';
 
 const proxyToArray = proxyObject => JSON.parse(JSON.stringify(proxyObject));
 
@@ -102,6 +102,54 @@ export const getTeam = ({ teamId }) => new Promise((resolve, reject) => {
         const team = realm.objectForPrimaryKey(TEAM_SCHEMA, teamId);
 
         resolve(proxyToArray(team));
+      });
+    })
+    .catch(error => reject(error));
+});
+
+export const insertNewGame = ({
+  championshipId, homeId, awayId, date,
+}) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        const newGame = {
+          id: uuid.v4(),
+          championshipId,
+          homeId,
+          awayId,
+          date,
+          createdAt: new Date(),
+        };
+
+        const championship = realm.objectForPrimaryKey(CHAMPIONSHIP_SCHEMA, championshipId);
+        championship.games.push(newGame);
+
+        resolve(newGame);
+      });
+    })
+    .catch(error => reject(error));
+});
+
+export const deleteGame = ({ gameId }) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        const game = realm.objectForPrimaryKey(GAME_SCHEMA, gameId);
+        realm.delete(game);
+        resolve();
+      });
+    })
+    .catch(error => reject(error));
+});
+
+export const getGame = ({ gameId }) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        const game = realm.objectForPrimaryKey(GAME_SCHEMA, gameId);
+
+        resolve(proxyToArray(game));
       });
     })
     .catch(error => reject(error));
