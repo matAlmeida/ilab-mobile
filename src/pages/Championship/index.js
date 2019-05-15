@@ -48,13 +48,15 @@ const Championship = ({
     const homeTeam = teams.find(team => team.id === homeId);
     const awayTeam = teams.find(team => team.id === awayId);
 
+    const gameName = `${homeTeam.name} x ${awayTeam.name}`;
+
     return (
       <ListGameItem
         game={item}
         homeTeam={homeTeam}
         awayTeam={awayTeam}
         onPress={() => navigation.navigate(path, { item })}
-        onLongPress={() => removeItem(item, path)}
+        onLongPress={() => removeItem({ ...item, name: gameName }, path)}
       />
     );
   };
