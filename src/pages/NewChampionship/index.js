@@ -8,7 +8,7 @@ import TextInput from '~/components/TextInput';
 
 import { Container, AddButton, AddButtonText } from './styles';
 
-import { backAction, resetAction } from '~/utils/navigation';
+import { backAction } from '~/utils/navigation';
 import { insertNewChampionship } from '~/services/database';
 
 const addChampionship = ({ name, pictureURI }, dispatch) => {
@@ -17,7 +17,7 @@ const addChampionship = ({ name, pictureURI }, dispatch) => {
     pictureURI,
   })
     .then(() => {
-      dispatch(resetAction('Main'));
+      dispatch(backAction('Main'));
     })
     .catch(error => console.error(error));
 };

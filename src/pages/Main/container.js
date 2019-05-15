@@ -7,7 +7,14 @@ function withChampionshipData(WrappedComponent) {
     state = { championshipsList: [], loadingChampionship: false };
 
     componentDidMount() {
+      // eslint-disable-next-line react/prop-types
+      const { navigation } = this.props;
+
       this.reloadChampionships();
+
+      navigation.addListener('willFocus', () => {
+        this.reloadChampionships();
+      });
     }
 
     handleDelete = (championship) => {
