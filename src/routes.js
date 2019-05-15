@@ -4,12 +4,14 @@ import { Animated, Easing } from 'react-native';
 import Main from '~/pages/Main';
 import Championship from '~/pages/Championship';
 import NewChampionship from '~/pages/NewChampionship';
+import NewTeam from '~/pages/NewTeam';
 
 const Navigator = createStackNavigator(
   {
     Main: { screen: Main, navigationOptions: { header: null } },
     Championship: { screen: Championship, navigationOptions: { header: null } },
     NewChampionship: { screen: NewChampionship, navigationOptions: { header: null } },
+    NewTeam: { screen: NewTeam, navigationOptions: { header: null } },
   },
   {
     initialRouteName: 'Main',
