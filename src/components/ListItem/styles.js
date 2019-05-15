@@ -6,12 +6,13 @@ export const Container = styled.TouchableOpacity`
   height: 75px;
   width: 100%;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
 `;
 
 export const ListItemImageBox = styled.View`
   flex-direction: row;
   height: 55px;
+  width: 92px;
 `;
 
 export const ListItemPicture = styled.Image`
@@ -35,7 +36,6 @@ export const ListItemSportPicture = styled.Image`
 export const ListItemNameBox = styled.View`
   flex: 1;
   justify-content: center;
-  padding-left: ${55 - 17}px;
 `;
 
 export const ListItemName = styled.Text`
