@@ -41,6 +41,7 @@ function withChampionshipData(WrappedComponent) {
       this.setState({ loadingChampionship: true });
       getChampionship({ championshipId: id })
         .then((championship) => {
+          navigation.setParams({ championship });
           this.setState({ championship, loadingChampionship: false });
         })
         .catch((error) => {
