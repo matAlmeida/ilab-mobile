@@ -1,9 +1,9 @@
 import { StackActions, NavigationActions } from 'react-navigation';
 
-const resetAction = routeName => StackActions.reset({
+const resetAction = (routeName, params = undefined) => StackActions.reset({
   index: 0,
   key: null,
-  actions: [NavigationActions.navigate({ routeName })],
+  actions: [NavigationActions.navigate({ routeName, params })],
 });
 
 const backAction = () => StackActions.pop({
