@@ -6,35 +6,37 @@ import ListItem from '~/components/ListItem';
 import ListContentBox from '~/components/ListContentBox';
 
 import { Container } from './styles';
+import { withChampionshipData } from './container';
 
+import ballImage from '~/assets/soccer-ball.jpg';
 import { backAction } from '~/utils/navigation';
 
-const Championship = ({ teamsList, gamesList, navigation }) => {
+const Championship = ({
+  teamsList, gamesList, navigation, onRefresh, refreshing,
+}) => {
   // eslint-disable-next-line react/prop-types
-  const renderItem = path => ({ item }) => {
-    const ballImage = 'https://media.tmicdn.com/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/s/o/soccer-ball-temporary-tattoo_1701.jpg';
-    return (
-      <ListItem
-        name={item.title}
-        forePictureURI={item.pictureURI}
-        backPictureURI={ballImage}
-        onPress={navigation.navigate(path, { item })}
-      />
-    );
-  };
+  const renderItem = path => ({ item }) => (
+    <ListItem
+      name={item.name}
+      forePicture={{ uri: item.pictureURI }}
+      backPicture={ballImage}
+      onPress={() => navigation.navigate(path, { item })}
+    />
+  );
 
-  const { name } = navigation.state.params.championship;
-  console.log(navigation.state.params.championship);
+  const { championship } = navigation.state.params;
 
   return (
     <Container>
       <Header
-        title={name}
+        title={championship.name}
         leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
       />
       <ListContentBox
         title="Times"
-        onAction={() => navigation.navigate('NewTeam')}
+        onAction={() => navigation.navigate('NewTeam', { championship })}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
         data={teamsList}
         renderItem={renderItem('Team')}
         style={{ marginBottom: 20 }}
@@ -52,6 +54,8 @@ const Championship = ({ teamsList, gamesList, navigation }) => {
 Championship.propTypes = {
   teamsList: PropTypes.array,
   gamesList: PropTypes.array,
+  onRefresh: PropTypes.func,
+  refreshing: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     dispatch: PropTypes.func,
@@ -61,6 +65,8 @@ Championship.propTypes = {
 Championship.defaultProps = {
   teamsList: [],
   gamesList: [],
+  onRefresh: undefined,
+  refreshing: false,
 };
 
-export default Championship;
+export default withChampionshipData(Championship);
