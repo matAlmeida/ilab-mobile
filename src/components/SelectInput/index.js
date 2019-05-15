@@ -1,13 +1,16 @@
 /* eslint react/prop-types: 0 */
 /* eslint react-native/split-platform-components: 0 */
 import React from 'react';
-import {
-  View, ActionSheetIOS, Platform, TouchableWithoutFeedback,
-} from 'react-native';
+import { ActionSheetIOS, Platform, TouchableWithoutFeedback } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import {
-  InputLabel, InputContainer, IosPickerBox, IosPickerText, Picker,
+  Container,
+  InputLabel,
+  InputContainer,
+  IosPickerBox,
+  IosPickerText,
+  Picker,
 } from './styles';
 
 class SelectInput extends React.Component {
@@ -42,7 +45,7 @@ class SelectInput extends React.Component {
     const { selectedValue, selectedIndex } = this.state;
 
     return (
-      <View>
+      <Container>
         <InputContainer>
           {Platform.OS === 'ios' && (
             <TouchableWithoutFeedback onPress={this.onIosPress}>
@@ -70,7 +73,7 @@ class SelectInput extends React.Component {
           )}
         </InputContainer>
         <InputLabel>{label}</InputLabel>
-      </View>
+      </Container>
     );
   }
 }

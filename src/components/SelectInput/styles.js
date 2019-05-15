@@ -3,6 +3,10 @@ import styled from 'styled-components/native';
 
 import Colors from '~/constants/Colors';
 
+export const Container = styled.View`
+  width: 90%;
+`;
+
 export const InputLabel = styled.Text`
   position: absolute;
   text-align: center;
@@ -23,6 +27,19 @@ export const InputContainer = styled.View`
   padding: 15px 5px;
 `;
 
+export const Picker = styled(RNPicker).attrs({
+  itemStyle: {
+    fontSize: 18,
+  },
+})`
+  width: 100%;
+  border-bottom-width: 2px;
+  border-width: 2px;
+  border-color: ${Colors.tintColor};
+  border-radius: 5px;
+  padding: 15px 5px;
+`;
+
 export const IosPickerBox = styled.View`
   margin: 15px 0;
   width: 90%;
@@ -35,9 +52,3 @@ export const IosPickerBox = styled.View`
 export const IosPickerText = styled.Text`
   font-size: 18px;
 `;
-
-export const Picker = styled(RNPicker).attrs({
-  itemStyle: {
-    fontSize: 18,
-  },
-})``;
