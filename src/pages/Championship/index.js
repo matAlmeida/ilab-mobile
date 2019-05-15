@@ -37,7 +37,7 @@ const Championship = ({
       name={item.name}
       forePicture={{ uri: item.pictureURI }}
       backPicture={teamIcon}
-      onPress={() => navigation.navigate(path, { item })}
+      onPress={() => navigation.navigate(path, { [path.toLowerCase()]: item })}
       onLongPress={() => removeItem(item, path)}
     />
   );
