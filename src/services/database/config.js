@@ -41,9 +41,8 @@ const PlayerSchema = {
     createdAt: 'date',
     pictureURI: 'string',
     number: 'int',
-    x_pos: 'float',
-    y_pos: 'float',
-    players: { type: 'list', objectType: PLAYER_SCHEMA },
+    xPos: 'float',
+    yPos: 'float',
   },
 };
 
@@ -69,7 +68,7 @@ const PlaySchema = {
     id: 'string',
     gameId: 'string',
     type: 'string',
-    finished_at: 'int',
+    finishedAt: 'int',
     udas: { type: 'list', objectType: UDA_SCHEMA },
   },
 };
@@ -86,7 +85,7 @@ const UDASchema = {
 export default {
   path: 'iLab.realm',
   schema: [ChampionshipSchema, TeamSchema, PlayerSchema, GameSchema, PlaySchema, UDASchema],
-  schemaVersion: 3,
+  schemaVersion: 5,
 };
 
 export {

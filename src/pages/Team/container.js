@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getTeam } from '~/services/database';
+import { getTeam, deletePlayer } from '~/services/database';
 
 function withTeamData(WrappedComponent) {
   return class extends React.Component {
@@ -18,7 +18,11 @@ function withTeamData(WrappedComponent) {
     }
 
     handleDelete = ({ player }) => {
-      console.warn('deletePlayer TODO', player);
+      deletePlayer({ playerId: player.id })
+        .then(() => {
+          this.reloadTeamInfo();
+        })
+        .catch(error => console.error(error));
     };
 
     reloadTeamInfo = () => {
