@@ -54,10 +54,12 @@ const GameSchema = {
     championshipId: 'string',
     createdAt: 'date',
     date: 'date',
-    done: { type: 'bool', default: false },
+    homeDone: { type: 'bool', default: false },
+    awayDone: { type: 'bool', default: false },
     homeId: 'string',
     awayId: 'string',
-    plays: { type: 'list', objectType: PLAY_SCHEMA },
+    homePlays: { type: 'list', objectType: PLAY_SCHEMA },
+    awayPlays: { type: 'list', objectType: PLAY_SCHEMA },
   },
 };
 
@@ -85,7 +87,7 @@ const UDASchema = {
 export default {
   path: 'iLab.realm',
   schema: [ChampionshipSchema, TeamSchema, PlayerSchema, GameSchema, PlaySchema, UDASchema],
-  schemaVersion: 5,
+  schemaVersion: 7,
 };
 
 export {

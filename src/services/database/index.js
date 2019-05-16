@@ -51,6 +51,9 @@ export const getChampionship = ({ championshipId }) => new Promise((resolve, rej
 
         const retChampionship = proxyToArray(championship);
         retChampionship.teams = proxyToArray(Array.from(championship.teams));
+        Array.from(championship.teams).map(
+          (team, index) => (retChampionship.teams[index].players = proxyToArray(Array.from(team.players))),
+        );
         retChampionship.games = proxyToArray(Array.from(championship.games));
 
         resolve(retChampionship);

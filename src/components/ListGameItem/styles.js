@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
-import Colors from '~/constants/Colors';
-
 export const Container = styled.TouchableOpacity`
   flex-direction: row;
   height: 75px;
@@ -45,12 +43,4 @@ export const ListItemName = styled.Text`
   text-align: center;
   font-size: 18px;
   font-weight: bold;
-`;
-
-export const ListItemHomeName = styled.Text`
-  color: #222;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: ${props => (props.canPlay ? Colors.tintColor : 'red')};
 `;
