@@ -5,6 +5,7 @@ import Main from '~/pages/Main';
 import Championship from '~/pages/Championship';
 import Team from '~/pages/Team';
 import Game from '~/pages/Game';
+import Field from '~/pages/Field';
 import NewChampionship from '~/pages/NewChampionship';
 import NewTeam from '~/pages/NewTeam';
 import NewGame from '~/pages/NewGame';
@@ -16,13 +17,14 @@ const Navigator = createStackNavigator(
     Championship: { screen: Championship, navigationOptions: { header: null } },
     Team: { screen: Team, navigationOptions: { header: null } },
     Game: { screen: Game, navigationOptions: { header: null } },
+    Field: { screen: Field, navigationOptions: { header: null } },
     NewChampionship: { screen: NewChampionship, navigationOptions: { header: null } },
     NewTeam: { screen: NewTeam, navigationOptions: { header: null } },
     NewGame: { screen: NewGame, navigationOptions: { header: null } },
     NewPlayer: { screen: NewPlayer, navigationOptions: { header: null } },
   },
   {
-    initialRouteName: 'Main',
+    initialRouteName: 'Field',
     transitionConfig: () => ({
       transitionSpec: {
         duration: 0,

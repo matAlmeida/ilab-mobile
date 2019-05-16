@@ -59,7 +59,9 @@ const Game = ({ navigation }) => {
             )}
             {homeCanPlay && (
               <>
-                <TeamPlayButton>
+                <TeamPlayButton
+                  onPress={() => navigation.navigate('Field', { game, team: homeTeam })}
+                >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
                 <TeamPlayButton disabled={!game.homeDone}>
@@ -90,7 +92,9 @@ const Game = ({ navigation }) => {
             )}
             {awayCanPlay && (
               <>
-                <TeamPlayButton>
+                <TeamPlayButton
+                  onPress={() => navigation.navigate('Field', { game, team: awayTeam })}
+                >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
                 <TeamPlayButton disabled={!game.awayDone}>
