@@ -7,6 +7,7 @@ import ListItem from '~/components/ListItem';
 import ListContentBox from '~/components/ListContentBox';
 
 import { Container } from './styles';
+import { withTeamData } from './container';
 
 import teamIcon from '~/assets/team-icon.png';
 import { backAction } from '~/utils/navigation';
@@ -78,4 +79,4 @@ Team.defaultProps = {
   refreshing: false,
 };
 
-export default Team;
+export default withTeamData(Team);
