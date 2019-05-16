@@ -9,7 +9,7 @@ import ListContentBox from '~/components/ListContentBox';
 import { Container } from './styles';
 import { withTeamData } from './container';
 
-import teamIcon from '~/assets/team-icon.png';
+import playerIcon from '~/assets/player-icon.png';
 import { backAction } from '~/utils/navigation';
 
 const Team = ({
@@ -35,7 +35,7 @@ const Team = ({
     <ListItem
       name={item.name}
       forePicture={{ uri: item.pictureURI }}
-      backPicture={teamIcon}
+      backPicture={playerIcon}
       onPress={() => navigation.navigate(path, { item })}
       onLongPress={() => removeItem(item)}
     />
