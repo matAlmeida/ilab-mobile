@@ -8,12 +8,15 @@ import {
   ListItemSportPicture,
   ListItemNameBox,
   ListItemName,
+  ListItemHomeName,
 } from './styles';
 
-const ListGameItem = ({ homeTeam, awayTeam, ...rest }) => (
+const ListGameItem = ({
+  homeTeam, awayTeam, canPlay, ...rest
+}) => (
   <Container {...rest}>
     <ListItemNameBox>
-      <ListItemName>{homeTeam.name}</ListItemName>
+      <ListItemHomeName canPlay={canPlay}>{homeTeam.name}</ListItemHomeName>
     </ListItemNameBox>
     <ListItemImageBox>
       <ListItemSportPicture source={{ uri: homeTeam.pictureURI }} />
@@ -28,6 +31,7 @@ const ListGameItem = ({ homeTeam, awayTeam, ...rest }) => (
 ListGameItem.propTypes = {
   homeTeam: PropTypes.object.isRequired,
   awayTeam: PropTypes.object.isRequired,
+  canPlay: PropTypes.bool.isRequired,
 };
 
 export default ListGameItem;
