@@ -31,15 +31,20 @@ const Team = ({
   };
 
   // eslint-disable-next-line react/prop-types
-  const renderItem = path => ({ item }) => (
-    <ListItem
-      name={item.name}
-      forePicture={{ uri: item.pictureURI }}
-      backPicture={playerIcon}
-      onPress={() => navigation.navigate(path, { item })}
-      onLongPress={() => removeItem(item)}
-    />
-  );
+  const renderItem = path => ({ item }) => {
+    const { number, name, pictureURI } = item;
+    const playerName = `Nº ${number} - ${name}`;
+
+    return (
+      <ListItem
+        name={playerName}
+        forePicture={{ uri: pictureURI }}
+        backPicture={playerIcon}
+        onPress={() => navigation.navigate(path, { item })}
+        onLongPress={() => removeItem(item)}
+      />
+    );
+  };
 
   const { team } = navigation.state.params;
 
