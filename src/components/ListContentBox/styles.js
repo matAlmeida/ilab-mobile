@@ -49,7 +49,7 @@ export const HeaderActionButton = styled.TouchableOpacity``;
 
 export const HeaderIcon = styled(Icon).attrs({
   color: Colors.tintColor,
-  size: 24,
+  size: 40,
 })``;
 
 export const HeaderTitle = styled.Text`
