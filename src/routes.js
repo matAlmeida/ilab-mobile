@@ -7,6 +7,7 @@ import Team from '~/pages/Team';
 import NewChampionship from '~/pages/NewChampionship';
 import NewTeam from '~/pages/NewTeam';
 import NewGame from '~/pages/NewGame';
+import NewPlayer from '~/pages/NewPlayer';
 
 const Navigator = createStackNavigator(
   {
@@ -16,6 +17,7 @@ const Navigator = createStackNavigator(
     NewChampionship: { screen: NewChampionship, navigationOptions: { header: null } },
     NewTeam: { screen: NewTeam, navigationOptions: { header: null } },
     NewGame: { screen: NewGame, navigationOptions: { header: null } },
+    NewPlayer: { screen: NewPlayer, navigationOptions: { header: null } },
   },
   {
     initialRouteName: 'Main',
