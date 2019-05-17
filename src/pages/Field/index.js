@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import FieldHeader from '~/components/FieldHeader';
@@ -11,59 +11,94 @@ import { withGameData } from './container';
 
 import { backAction } from '~/utils/navigation';
 
-const Field = ({ playersList, navigation, savePlayers }) => {
-  const [disableDrag, setDisableDrag] = useState(false);
-  const [pageTitle, setPageTitle] = useState('Prepare a Formação!');
-  const [formation, setFormation] = useState({});
-
-  const newFormation = {};
-
-  const handleSaveFormation = () => {
-    savePlayers(formation);
-
-    setDisableDrag(true);
-    setPageTitle('Começar partida?');
+class Field extends React.Component {
+  state = {
+    disableDrag: false,
+    pageTitle: '',
+    formation: {},
+    headerButtons: [],
   };
 
-  const handleReleasePlayer = (playerId, value) => {
+  newFormation = {};
+
+  componentDidMount = () => {
+    this.handleEditScreen();
+  };
+
+  handleEditScreen = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      disableDrag: false,
+      pageTitle: 'Prepare a Formação!',
+      headerButtons: [{ name: 'save', onPress: this.handleSaveFormation }],
+    }));
+  };
+
+  handleSaveFormation = () => {
+    const { formation } = this.state;
+    const { savePlayers } = this.props;
+
+    savePlayers(formation);
+
+    this.setState(prevState => ({
+      ...prevState,
+      disableDrag: true,
+      pageTitle: 'Começar partida?',
+      headerButtons: [
+        { name: 'edit', onPress: this.handleEditScreen },
+        { name: 'play-circle-filled', onPress: this.handleEditScreen },
+      ],
+    }));
+  };
+
+  handleReleasePlayer = (playerId, value) => {
     const { x, y } = value;
+    const { playersList } = this.props;
 
     playersList.map((player) => {
       if (player.id === playerId) {
-        newFormation[playerId] = {
+        this.newFormation[playerId] = {
           xPos: player.xPos + x,
           yPos: player.yPos + y,
         };
 
-        setFormation(newFormation);
+        this.setState(prevState => ({ ...prevState, formation: this.newFormation }));
       }
     });
   };
 
-  const renderPlayers = () => playersList.map(player => (
+  renderPlayers = () => this.props.playersList.map(player => (
     <Draggable
       key={player.id}
-      disableDrag={disableDrag}
+      disableDrag={this.state.disableDrag}
       x={player.xPos}
       y={player.yPos}
-      pressDragRelease={value => handleReleasePlayer(player.id, value)}
+      pressDragRelease={value => this.handleReleasePlayer(player.id, value)}
     >
       <PlayerChip {...player} />
     </Draggable>
   ));
 
-  return (
-    <Container>
-      <FieldBackground />
-      <FieldHeader
-        title={pageTitle}
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
-        rightIcon={{ name: 'save', onPress: handleSaveFormation }}
-      />
-      {renderPlayers()}
-    </Container>
-  );
-};
+  render() {
+    const { pageTitle, headerButtons } = this.state;
+    const { navigation } = this.props;
+
+    return (
+      <Container>
+        <FieldBackground />
+        <FieldHeader
+          title={pageTitle}
+          leftIcon={{
+            name: 'arrow-back',
+            onPress: () => navigation.dispatch(backAction()),
+          }}
+          rightIcons={headerButtons}
+        />
+        {this.renderPlayers()}
+      </Container>
+    );
+  }
+}
 
 Field.propTypes = {
   playersList: PropTypes.array,
