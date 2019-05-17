@@ -61,6 +61,7 @@ const Game = ({ navigation }) => {
               <>
                 <TeamPlayButton
                   onPress={() => navigation.navigate('Field', { game, team: homeTeam })}
+                  disabled={game.homeDone}
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
@@ -94,6 +95,7 @@ const Game = ({ navigation }) => {
               <>
                 <TeamPlayButton
                   onPress={() => navigation.navigate('Field', { game, team: awayTeam })}
+                  disabled={game.awayDone}
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
