@@ -17,6 +17,9 @@ class Field extends React.Component {
     pageTitle: '',
     formation: {},
     headerButtons: [],
+    gameStarted: false,
+    currentPlayerId: null,
+    currentUDA: [],
   };
 
   newFormation = {};
@@ -46,7 +49,19 @@ class Field extends React.Component {
       pageTitle: 'Começar partida?',
       headerButtons: [
         { name: 'edit', onPress: this.handleEditScreen },
-        { name: 'play-circle-filled', onPress: this.handleEditScreen },
+        { name: 'play-circle-filled', onPress: this.handleStartGame },
+      ],
+    }));
+  };
+
+  handleStartGame = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      readyToPlay: true,
+      pageTitle: '00:00',
+      headerButtons: [
+        { name: 'soccer', onPress: this.handleStartGame, type: 'material-community' },
+        { name: 'whistle', onPress: this.handleStartGame, type: 'material-community' },
       ],
     }));
   };
@@ -67,17 +82,42 @@ class Field extends React.Component {
     });
   };
 
-  renderPlayers = () => this.props.playersList.map(player => (
-    <Draggable
-      key={player.id}
-      disableDrag={this.state.disableDrag}
-      x={player.xPos}
-      y={player.yPos}
-      pressDragRelease={value => this.handleReleasePlayer(player.id, value)}
-    >
-      <PlayerChip {...player} />
-    </Draggable>
-  ));
+  handlePlayerPress = (playerId) => {
+    const { readyToPlay, currentPlayerId, currentUDA } = this.state;
+
+    if (readyToPlay) {
+      const uda = {
+        receiverId: playerId,
+        senderId: null,
+      };
+
+      if (currentPlayerId !== playerId) {
+        uda.senderId = currentPlayerId;
+      }
+
+      const newUDA = [...currentUDA, uda];
+
+      this.setState({ currentPlayerId: playerId, currentUDA: newUDA });
+    }
+  };
+
+  renderPlayers = () => {
+    const { currentPlayerId, disableDrag } = this.state;
+    const { playersList } = this.props;
+
+    return playersList.map(player => (
+      <Draggable
+        key={player.id}
+        disableDrag={disableDrag}
+        x={player.xPos}
+        y={player.yPos}
+        pressDrag={() => this.handlePlayerPress(player.id)}
+        pressDragRelease={value => this.handleReleasePlayer(player.id, value)}
+      >
+        <PlayerChip hasBall={currentPlayerId === player.id} {...player} />
+      </Draggable>
+    ));
+  };
 
   render() {
     const { pageTitle, headerButtons } = this.state;

@@ -16,7 +16,7 @@ const Header = ({ title, leftIcon, rightIcons }) => (
     {!!rightIcons
       && rightIcons.map(icon => (
         <HeaderButton key={icon.name} onPress={icon.onPress}>
-          <HeaderIcon name={icon.name} />
+          <HeaderIcon name={icon.name} type={icon.type} />
         </HeaderButton>
       ))}
   </Container>
