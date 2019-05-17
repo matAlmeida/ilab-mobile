@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    implementation project(':rn-fetch-blob')
     implementation project(':react-native-svg')
     implementation project(':realm')
     implementation project(':react-native-image-picker')
