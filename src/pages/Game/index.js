@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
-
+import Modal from '~/components/Modal';
 import toast from '~/components/Toast';
 
 import {
@@ -23,7 +23,9 @@ import { withTeamData } from './container';
 
 import { backAction } from '~/utils/navigation';
 
-const Game = ({ navigation }) => {
+const Game = ({ navigation, onExtractChoose }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const showToast = teamName => toast({
     message: `O time "${teamName}" não tem o número minímo de jogadores.`,
   });
@@ -65,9 +67,16 @@ const Game = ({ navigation }) => {
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
-                <TeamPlayButton disabled={!game.homeDone}>
+                <TeamPlayButton onPress={() => setModalVisible(true)} disabled={!game.homeDone}>
                   <TeamPlayButtonText>Extrair</TeamPlayButtonText>
                 </TeamPlayButton>
+                <Modal
+                  title="Extrair Matriz de Adjacência"
+                  onClose={() => setModalVisible(false)}
+                  onChoose={option => onExtractChoose(option, { game, gameName, team: homeTeam })}
+                  visible={modalVisible}
+                  options={[{ label: 'Matriz Completa', value: 'full-matrix' }]}
+                />
               </>
             )}
           </TeamButtonBox>
@@ -112,6 +121,7 @@ const Game = ({ navigation }) => {
 };
 
 Game.propTypes = {
+  onExtractChoose: PropTypes.func.isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     dispatch: PropTypes.func,

@@ -1,4 +1,7 @@
 import React from 'react';
+import { Alert, PermissionsAndroid } from 'react-native';
+import Mailer from 'react-native-mail';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import { getTeam, getGame } from '~/services/database';
 
@@ -14,6 +17,109 @@ function withTeamData(WrappedComponent) {
         this.reloadTeamInfo();
       });
     }
+
+    handleEmail = ({ title, filePath }) => {
+      Mailer.mail(
+        {
+          subject: 'Relatório InterativeLab',
+          recipients: [],
+          ccRecipients: [],
+          bccRecipients: [],
+          body: `${title}`,
+          isHTML: true,
+          attachment: {
+            path: filePath, // The absolute path of the file from which to read data.
+            type: 'csv', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
+          },
+        },
+        (error, event) => {
+          Alert.alert(
+            error,
+            event,
+            [
+              { text: 'Ok', onPress: () => console.tron.log('OK: Email Error Response') },
+              { text: 'Cancel', onPress: () => console.tron.log('CANCEL: Email Error Response') },
+            ],
+            { cancelable: true },
+          );
+        },
+      );
+    };
+
+    uda2matrix = (plays, players) => {
+      const idMap = players.map((player, index) => ({ [player.id]: index }));
+      const matrix = [];
+
+      for (let i = 0; i < 11; i += 1) {
+        const row = [];
+        for (let j = 0; j < 11; j += 1) {
+          const column = 0;
+          row.push(column);
+        }
+        matrix.push(row);
+      }
+
+      console.tron.log('plays', plays);
+
+      plays.map(play => Array.from(play.udas).map((uda) => {
+        const sender = idMap[uda.senderId];
+        const receiver = idMap[uda.receiverId];
+
+        matrix[sender][receiver] += 1;
+      }));
+
+      return matrix;
+    };
+
+    matrix2csv = (matrix) => {
+      const csv = matrix.reduce((str1, row) => {
+        const col = row.reduce((str2, column) => `${str2},${column}`, '');
+
+        return `${str1}${col.substring(1)}\n`;
+      }, '');
+
+      return csv;
+    };
+
+    handleExtranction = (option, { game, gameName, team }) => {
+      let plays = [];
+      if (game.homeId === team.id) {
+        plays = game.homePlays;
+      } else {
+        plays = game.awayPlays;
+      }
+
+      const udaMatrix = this.uda2matrix(plays, team.players);
+      console.tron.log('udaMatrix', udaMatrix);
+      const udaCsv = this.matrix2csv(udaMatrix);
+      console.tron.log('udaCsv', udaCsv);
+
+      const pathToWrite = `${
+        RNFetchBlob.fs.dirs.DownloadDir
+      }/ilab-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`;
+      console.tron.log('pathToWrite', pathToWrite);
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
+        title: 'Permissão para salvar o Arquivo',
+        message: 'O InterativeLab precisa da permissão de' + 'armazenamento para salvar o arquivo.',
+        buttonNeutral: 'Perguntar Depois',
+        buttonNegative: 'Cancelar',
+        buttonPositive: 'OK',
+      })
+        .then((granted) => {
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            RNFetchBlob.fs
+              .writeFile(pathToWrite, udaCsv, 'utf8')
+              .then(() => {
+                console.tron.log(`wrote file ${pathToWrite}`);
+                this.handleEmail({ title: gameName, filePath: pathToWrite });
+              })
+              .catch(error => console.error(error));
+          } else {
+            console.tron.log('Camera permission denied');
+          }
+        })
+        .catch(error => console.warn(error));
+    };
 
     reloadTeamInfo = () => {
       // eslint-disable-next-line react/prop-types
@@ -47,7 +153,7 @@ function withTeamData(WrappedComponent) {
     };
 
     render() {
-      return <WrappedComponent {...this.props} />;
+      return <WrappedComponent {...this.props} onExtractChoose={this.handleExtranction} />;
     }
   };
 }

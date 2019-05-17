@@ -196,7 +196,11 @@ export const getGame = ({ gameId }) => new Promise((resolve, reject) => {
       realm.write(() => {
         const game = realm.objectForPrimaryKey(GAME_SCHEMA, gameId);
 
-        resolve(proxyToArray(game));
+        const retGame = proxyToArray(game);
+        retGame.homePlays = proxyToArray(Array.from(game.homePlays));
+        retGame.awayPlays = proxyToArray(Array.from(game.awayPlays));
+
+        resolve(proxyToArray(retGame));
       });
     })
     .catch(error => reject(error));
