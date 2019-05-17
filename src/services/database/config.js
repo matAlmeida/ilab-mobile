@@ -78,7 +78,6 @@ const PlaySchema = {
 const UDASchema = {
   name: UDA_SCHEMA,
   properties: {
-    playId: 'string',
     senderId: 'string',
     receiverId: 'string',
   },
@@ -87,7 +86,7 @@ const UDASchema = {
 export default {
   path: 'iLab.realm',
   schema: [ChampionshipSchema, TeamSchema, PlayerSchema, GameSchema, PlaySchema, UDASchema],
-  schemaVersion: 7,
+  schemaVersion: 8,
 };
 
 export {

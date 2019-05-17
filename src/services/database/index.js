@@ -154,6 +154,30 @@ export const insertNewGame = ({
     .catch(error => reject(error));
 });
 
+export const updateGame = ({
+  id, homeDone, awayDone, homePlays, awayPlays,
+}) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        if (!id) reject(new Error('You need to inform the Game Id to update'));
+
+        const updatedGame = {
+          id,
+          homeDone,
+          awayDone,
+          homePlays,
+          awayPlays,
+        };
+
+        realm.create(GAME_SCHEMA, updatedGame, 'modified');
+
+        resolve();
+      });
+    })
+    .catch(error => reject(error));
+});
+
 export const deleteGame = ({ gameId }) => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {

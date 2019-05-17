@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import timer from 'react-native-timer';
+import * as uuid from 'uuid';
 
 import FieldHeader from '~/components/FieldHeader';
 import FieldBackground from '~/components/FieldBackground';
 import PlayerChip from '~/components/PlayerChip';
 import Draggable from '~/components/Draggable';
+import Modal from '~/components/Modal';
 
 import { Container } from './styles';
 import { withGameData } from './container';
@@ -19,13 +22,27 @@ class Field extends React.Component {
     headerButtons: [],
     gameStarted: false,
     currentPlayerId: null,
-    currentUDA: [],
+    gameTime: 0,
+    allPlays: [],
+    currentPlay: [],
+    finishUdaModalVisible: false,
+    finishGameModalVisible: false,
   };
 
   newFormation = {};
 
   componentDidMount = () => {
     this.handleEditScreen();
+  };
+
+  componentWillUnmount = () => {
+    timer.clearInterval('gameTimeInterval');
+  };
+
+  toogleModal = modalType => () => {
+    const modalName = `finish${modalType}ModalVisible`;
+
+    this.setState(prevState => ({ [modalName]: !prevState[modalName] }));
   };
 
   handleEditScreen = () => {
@@ -54,16 +71,98 @@ class Field extends React.Component {
     }));
   };
 
+  incrementGameTime = () => this.setState(prevState => ({ ...prevState, gameTime: prevState.gameTime + 1 }));
+
   handleStartGame = () => {
     this.setState(prevState => ({
       ...prevState,
       readyToPlay: true,
       pageTitle: '00:00',
       headerButtons: [
-        { name: 'soccer', onPress: this.handleStartGame, type: 'material-community' },
-        { name: 'whistle', onPress: this.handleStartGame, type: 'material-community' },
+        { name: 'whistle', onPress: this.toogleModal('Game'), type: 'material-community' },
+        { name: 'soccer', onPress: this.toogleModal('Uda'), type: 'material-community' },
       ],
     }));
+
+    timer.setInterval('gameTimeInterval', this.incrementGameTime, 1000);
+  };
+
+  handleSavePlay = (choosedOption) => {
+    const { currentPlay, allPlays, gameTime } = this.state;
+    const {
+      navigation: {
+        state: {
+          params: { game },
+        },
+      },
+    } = this.props;
+
+    if (currentPlay !== []) {
+      const newPlay = {
+        id: uuid.v4(),
+        gameId: game.id,
+        type: choosedOption,
+        finishedAt: gameTime,
+        udas: currentPlay,
+      };
+
+      const newAllPlays = [...allPlays, newPlay];
+
+      this.setState({
+        allPlays: newAllPlays,
+        currentPlay: [],
+        currentPlayerId: null,
+        finishUdaModalVisible: false,
+      });
+    }
+
+    this.toogleModal('Uda');
+  };
+
+  handleFinishGame = (choosedOption) => {
+    const { navigation } = this.props;
+
+    switch (choosedOption) {
+      case 'end-game':
+        this.saveGame();
+        navigation.dispatch(backAction());
+        break;
+      default:
+        break;
+    }
+  };
+
+  saveGame = () => {
+    const {
+      navigation: {
+        state: {
+          params: { game, team },
+        },
+      },
+      updateGame,
+    } = this.props;
+
+    const { allPlays } = this.state;
+
+    const newGame = {
+      id: game.id,
+    };
+
+    if (game.homeId === team.id) {
+      newGame.homeDone = true;
+      newGame.homePlays = allPlays;
+    } else if (game.awayId === team.id) {
+      newGame.awayDone = true;
+      newGame.awayPlays = allPlays;
+    } else {
+      console.error(new Error("The gameId and teamId doesn't matches!"));
+      return;
+    }
+
+    updateGame(newGame);
+    this.setState({ allPlays: [], currentPlay: [] });
+
+    timer.clearInterval('gameTimeInterval');
   };
 
   handleReleasePlayer = (playerId, value) => {
@@ -83,21 +182,21 @@ class Field extends React.Component {
   };
 
   handlePlayerPress = (playerId) => {
-    const { readyToPlay, currentPlayerId, currentUDA } = this.state;
+    const { readyToPlay, currentPlayerId, currentPlay } = this.state;
 
     if (readyToPlay) {
       const uda = {
         receiverId: playerId,
-        senderId: null,
+        senderId: currentPlayerId,
       };
 
-      if (currentPlayerId !== playerId) {
-        uda.senderId = currentPlayerId;
+      if (currentPlayerId !== null) {
+        const newUDA = [...currentPlay, uda];
+
+        this.setState({ currentPlay: newUDA });
       }
 
-      const newUDA = [...currentUDA, uda];
-
-      this.setState({ currentPlayerId: playerId, currentUDA: newUDA });
+      this.setState({ currentPlayerId: playerId });
     }
   };
 
@@ -120,7 +219,9 @@ class Field extends React.Component {
   };
 
   render() {
-    const { pageTitle, headerButtons } = this.state;
+    const {
+      pageTitle, headerButtons, finishUdaModalVisible, finishGameModalVisible,
+    } = this.state;
     const { navigation } = this.props;
 
     return (
@@ -135,6 +236,28 @@ class Field extends React.Component {
           rightIcons={headerButtons}
         />
         {this.renderPlayers()}
+        <Modal
+          title="Finalizar Unidade"
+          onClose={this.toogleModal('Uda')}
+          onChoose={this.handleSavePlay}
+          visible={finishUdaModalVisible}
+          options={[
+            { label: 'Gol', value: 'goal' },
+            { label: 'Finalização', value: 'finishe', color: '#f4aa42' },
+            { label: 'Interceptação', value: 'intercept', color: '#41d0f4' },
+            { label: 'Bola Saiu do Jogo', value: 'out-of-game', color: '#f45241' },
+          ]}
+        />
+        <Modal
+          title="Finalizar Jogo"
+          onClose={this.toogleModal('Game')}
+          onChoose={this.handleFinishGame}
+          visible={finishGameModalVisible}
+          options={[
+            { label: 'Finalizar Jogo', value: 'end-game', color: '#f4aa42' },
+            { label: 'Cancelar', value: 'cancel', color: '#f45241' },
+          ]}
+        />
       </Container>
     );
   }
@@ -143,6 +266,7 @@ class Field extends React.Component {
 Field.propTypes = {
   playersList: PropTypes.array,
   savePlayers: PropTypes.func.isRequired,
+  updateGame: PropTypes.func.isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     dispatch: PropTypes.func,

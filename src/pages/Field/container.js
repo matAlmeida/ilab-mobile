@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { getGame, getTeam, updatePlayerPos } from '~/services/database';
+import {
+  getGame, getTeam, updatePlayerPos, updateGame,
+} from '~/services/database';
 
 function withGameData(WrappedComponent) {
   return class extends React.Component {
@@ -76,6 +78,7 @@ function withGameData(WrappedComponent) {
         <WrappedComponent
           {...this.props}
           savePlayers={this.handleUpdatePlayers}
+          updateGame={updateGame}
           playersList={team.players}
           refresing={loadingGame}
         />
