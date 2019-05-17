@@ -8,12 +8,12 @@ export const Container = styled.View`
   flex-direction: row;
   align-items: center;
   margin: 0;
-  padding: 20px 20px;
+  padding: 20px 20px 20px 0px;
   background-color: #fff;
 `;
 
 export const HeaderButton = styled.TouchableOpacity`
-  margin-right: 20px;
+  margin-left: 20px;
 `;
 
 export const HeaderIcon = styled(Icon).attrs({
@@ -26,4 +26,5 @@ export const HeaderTitle = styled.Text`
   text-align: center;
   font-size: 24px;
   font-weight: bold;
+  margin-left: 20px;
 `;

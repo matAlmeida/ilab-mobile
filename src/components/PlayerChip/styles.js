@@ -21,6 +21,6 @@ export const PlayerPicture = styled.Image`
   height: 60px;
   width: 60px;
   border-radius: 30px;
-  border-width: 2;
+  border-width: 4;
   border-color: ${props => (props.hasBall ? 'red' : '#6e72ef')};
 `;

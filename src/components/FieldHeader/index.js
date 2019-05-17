@@ -5,7 +5,7 @@ import {
   Container, HeaderButton, HeaderIcon, HeaderTitle,
 } from './styles';
 
-const Header = ({ title, leftIcon, rightIcon }) => (
+const Header = ({ title, leftIcon, rightIcons }) => (
   <Container>
     {!!leftIcon && (
       <HeaderButton onPress={leftIcon.onPress}>
@@ -13,23 +13,26 @@ const Header = ({ title, leftIcon, rightIcon }) => (
       </HeaderButton>
     )}
     <HeaderTitle>{title}</HeaderTitle>
-    {!!rightIcon && (
-      <HeaderButton onPress={rightIcon.onPress}>
-        <HeaderIcon name={rightIcon.name} />
-      </HeaderButton>
-    )}
+    {!!rightIcons
+      && rightIcons.map(icon => (
+        <HeaderButton key={icon.name} onPress={icon.onPress}>
+          <HeaderIcon name={icon.name} />
+        </HeaderButton>
+      ))}
   </Container>
 );
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   leftIcon: PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
-  rightIcon: PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
+  rightIcons: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
+  ),
 };
 
 Header.defaultProps = {
   leftIcon: {},
-  rightIcon: {},
+  rightIcons: [],
 };
 
 export default Header;
