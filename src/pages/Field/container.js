@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { getGame } from '~/services/database';
+import { getGame, getTeam, updatePlayerPos } from '~/services/database';
 
 function withGameData(WrappedComponent) {
   return class extends React.Component {
-    state = { game: {}, loadingGame: false };
+    state = {
+      game: {},
+      team: {},
+      loadingGame: false,
+      loadingTeam: false,
+      savingPlayers: false,
+    };
 
     componentDidMount() {
       // eslint-disable-next-line react/prop-types
@@ -20,10 +26,13 @@ function withGameData(WrappedComponent) {
     reloadGameInfo = () => {
       // eslint-disable-next-line react/prop-types
       const { navigation } = this.props;
-      const { id } = navigation.state.params.game;
+      const {
+        game: { id: gameId },
+        team: { id: teamId },
+      } = navigation.state.params;
 
-      this.setState({ loadingGame: true });
-      getGame({ gameId: id })
+      this.setState({ loadingGame: true, loadingTeam: true });
+      getGame({ gameId })
         .then((game) => {
           navigation.setParams({ game });
           this.setState({ game, loadingGame: false });
@@ -32,12 +41,45 @@ function withGameData(WrappedComponent) {
           console.error(error);
           this.setState({ loadingGame: false, game: {} });
         });
+
+      getTeam({ teamId })
+        .then((team) => {
+          navigation.setParams({ team });
+          this.setState({ team, loadingTeam: false });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.setState({ loadingTeam: false, team: {} });
+        });
+    };
+
+    handleUpdatePlayers = async (players) => {
+      this.setState({ savingPlayers: true });
+
+      await Promise.all(
+        Object.keys(players).map(async (playerId) => {
+          try {
+            await updatePlayerPos({ ...players[playerId], id: playerId });
+          } catch (error) {
+            console.error(error);
+          }
+        }),
+      );
+
+      this.setState({ savingPlayers: false });
     };
 
     render() {
-      const { game, loadingGame } = this.state;
+      const { loadingGame, team } = this.state;
 
-      return <WrappedComponent {...this.props} refresing={loadingGame} />;
+      return (
+        <WrappedComponent
+          {...this.props}
+          savePlayers={this.handleUpdatePlayers}
+          playersList={team.players}
+          refresing={loadingGame}
+        />
+      );
     }
   };
 }

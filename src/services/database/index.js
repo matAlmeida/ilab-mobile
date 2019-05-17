@@ -209,6 +209,26 @@ export const insertNewPlayer = ({
     .catch(error => reject(error));
 });
 
+export const updatePlayerPos = ({ id, xPos, yPos }) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        if (!id) reject(new Error('You need to inform the Player Id to update'));
+
+        const updatedPlayer = {
+          id,
+          xPos,
+          yPos,
+        };
+
+        realm.create(PLAYER_SCHEMA, updatedPlayer, 'modified');
+
+        resolve();
+      });
+    })
+    .catch(error => reject(error));
+});
+
 export const deletePlayer = ({ playerId }) => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {

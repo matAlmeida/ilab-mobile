@@ -6,7 +6,7 @@ export const Container = styled.View`
 `;
 
 export const NumberBox = styled.View`
-  background-color: #6e72ef;
+  background-color: ${props => (props.hasBall ? 'red' : '#6e72ef')};
   padding: 5px;
   margin-top: -5px;
   border-bottom-left-radius: 5px;
@@ -18,9 +18,9 @@ export const NumberText = styled.Text`
 `;
 
 export const PlayerPicture = styled.Image`
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
   border-width: 2;
-  border-color: #6e72ef;
+  border-color: ${props => (props.hasBall ? 'red' : '#6e72ef')};
 `;

@@ -5,12 +5,12 @@ import {
 } from './styles';
 
 // eslint-disable-next-line react/prop-types
-const PlayerChip = ({ pictureURI, number }) => (
+const PlayerChip = ({ pictureURI, number, hasBall = false }) => (
   <Container>
-    <NumberBox>
+    <NumberBox hasBall={hasBall}>
       <NumberText>{`${number > 9 ? '' : '0'}${number}`}</NumberText>
     </NumberBox>
-    <PlayerPicture source={{ uri: pictureURI }} />
+    <PlayerPicture hasBall={hasBall} source={{ uri: pictureURI }} />
   </Container>
 );
 

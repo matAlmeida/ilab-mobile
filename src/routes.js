@@ -24,7 +24,7 @@ const Navigator = createStackNavigator(
     NewPlayer: { screen: NewPlayer, navigationOptions: { header: null } },
   },
   {
-    initialRouteName: 'Field',
+    initialRouteName: 'Main',
     transitionConfig: () => ({
       transitionSpec: {
         duration: 0,
