@@ -26,9 +26,8 @@ function withTeamData(WrappedComponent) {
           ccRecipients: [],
           bccRecipients: [],
           body: `${title}`,
-          isHTML: true,
           attachment: {
-            path: filePath, // The absolute path of the file from which to read data.
+            path: `${filePath}`, // The absolute path of the file from which to read data.
             type: 'csv', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
           },
         },
@@ -47,7 +46,7 @@ function withTeamData(WrappedComponent) {
     };
 
     uda2matrix = (plays, players) => {
-      const idMap = players.map((player, index) => ({ [player.id]: index }));
+      const idMap = players.map((player, index) => ({ id: player.id, index }));
       const matrix = [];
 
       for (let i = 0; i < 11; i += 1) {
@@ -59,14 +58,14 @@ function withTeamData(WrappedComponent) {
         matrix.push(row);
       }
 
-      console.tron.log('plays', plays);
+      plays.map(play => Object.keys(play.udas)
+        .map(key => play.udas[key])
+        .map((uda) => {
+          const sender = idMap.find(mapped => mapped.id === uda.senderId);
+          const receiver = idMap.find(mapped => mapped.id === uda.receiverId);
 
-      plays.map(play => Array.from(play.udas).map((uda) => {
-        const sender = idMap[uda.senderId];
-        const receiver = idMap[uda.receiverId];
-
-        matrix[sender][receiver] += 1;
-      }));
+          matrix[sender.index][receiver.index] += 1;
+        }));
 
       return matrix;
     };
@@ -81,7 +80,7 @@ function withTeamData(WrappedComponent) {
       return csv;
     };
 
-    handleExtranction = (option, { game, gameName, team }) => {
+    handleExtraction = (option, { game, gameName, team }) => {
       let plays = [];
       if (game.homeId === team.id) {
         plays = game.homePlays;
@@ -90,9 +89,7 @@ function withTeamData(WrappedComponent) {
       }
 
       const udaMatrix = this.uda2matrix(plays, team.players);
-      console.tron.log('udaMatrix', udaMatrix);
       const udaCsv = this.matrix2csv(udaMatrix);
-      console.tron.log('udaCsv', udaCsv);
 
       const pathToWrite = `${
         RNFetchBlob.fs.dirs.DownloadDir
@@ -153,7 +150,7 @@ function withTeamData(WrappedComponent) {
     };
 
     render() {
-      return <WrappedComponent {...this.props} onExtractChoose={this.handleExtranction} />;
+      return <WrappedComponent {...this.props} onExtractChoose={this.handleExtraction} />;
     }
   };
 }
