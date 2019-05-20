@@ -107,12 +107,10 @@ function withTeamData(WrappedComponent) {
             RNFetchBlob.fs
               .writeFile(pathToWrite, udaCsv, 'utf8')
               .then(() => {
-                console.tron.log(`wrote file ${pathToWrite}`);
                 this.handleEmail({ title: gameName, filePath: pathToWrite });
               })
               .catch(error => console.error(error));
           } else {
-            console.tron.log('Camera permission denied');
           }
         })
         .catch(error => console.warn(error));
