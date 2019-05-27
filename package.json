@@ -15,6 +15,7 @@
     "react-native": "0.59.8",
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.2.1",
+    "react-native-image-crop-picker": "^0.24.1",
     "react-native-keyboard-aware-scrollview": "^2.0.0",
     "react-native-mail": "^3.0.7",
     "react-native-modal": "^10.0.0",
