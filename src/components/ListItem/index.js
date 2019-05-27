@@ -11,13 +11,15 @@ import {
   ListItemName,
 } from './styles';
 
+import noImage from '~/assets/no-image.png';
+
 const ListItem = ({
   name, forePicture, backPicture, ...rest
 }) => (
   <Container {...rest}>
     <ListItemImageBox>
       <ListItemSportPicture source={backPicture} />
-      <ListItemPicture source={forePicture} />
+      <ListItemPicture source={forePicture.uri ? forePicture : noImage} />
     </ListItemImageBox>
     <ListItemNameBox>
       <ListItemName>{name}</ListItemName>

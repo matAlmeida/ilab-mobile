@@ -10,14 +10,16 @@ import {
   ListItemName,
 } from './styles';
 
+import noImage from '~/assets/no-image.png';
+
 const ListGameItem = ({ homeTeam, awayTeam, ...rest }) => (
   <Container {...rest}>
     <ListItemNameBox>
       <ListItemName>{homeTeam.name}</ListItemName>
     </ListItemNameBox>
     <ListItemImageBox>
-      <ListItemSportPicture source={{ uri: homeTeam.pictureURI }} />
-      <ListItemPicture source={{ uri: awayTeam.pictureURI }} />
+      <ListItemSportPicture source={homeTeam.pictureURI ? { uri: homeTeam.pictureURI } : noImage} />
+      <ListItemPicture source={awayTeam.pictureURI ? { uri: awayTeam.pictureURI } : noImage} />
     </ListItemImageBox>
     <ListItemNameBox>
       <ListItemName>{awayTeam.name}</ListItemName>
