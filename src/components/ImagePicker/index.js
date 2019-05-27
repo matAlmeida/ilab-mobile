@@ -6,9 +6,15 @@ import {
   Container, AddImageButton, CameraIcon, Picture,
 } from './styles';
 
+const handleRejection = async (fn) => {
+  const response = await fn().catch(error => error);
+
+  return response;
+};
+
 const ImagePicker = ({ onPress, value, style }) => (
   <Container style={style}>
-    <AddImageButton onPress={onPress}>
+    <AddImageButton onPress={() => handleRejection(onPress)}>
       {!!value && <Picture source={{ uri: value }} />}
       {!value && <CameraIcon />}
     </AddImageButton>
