@@ -4,7 +4,7 @@
 
 ## Roadmap v1.0.0
 
-- [ ] Adicionar Foto
+- [x] Adicionar Foto
 - [ ] Filtragem de Jogadores
 - [ ] Filtragem da Matriz
 - [ ] Fechar versão 1.0.0
