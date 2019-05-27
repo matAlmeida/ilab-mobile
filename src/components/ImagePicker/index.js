@@ -1,7 +1,24 @@
-import ImagePicker from 'react-native-image-crop-picker';
+/* eslint react/prop-types: 0 */
+import React from 'react';
+import RNImagePicker from 'react-native-image-crop-picker';
+
+import {
+  Container, AddImageButton, CameraIcon, Picture,
+} from './styles';
+
+const ImagePicker = ({ onPress, value, style }) => (
+  <Container style={style}>
+    <AddImageButton onPress={onPress}>
+      {!!value && <Picture source={{ uri: value }} />}
+      {!value && <CameraIcon />}
+    </AddImageButton>
+  </Container>
+);
+
+export default ImagePicker;
 
 const openImagePicker = () => new Promise((resolve, reject) => {
-  ImagePicker.openPicker({
+  RNImagePicker.openPicker({
     cropping: true,
     mediaType: 'photo',
     compressImageQuality: 0.8,
