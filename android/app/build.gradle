@@ -141,7 +141,6 @@ dependencies {
     implementation project(':rn-fetch-blob')
     implementation project(':react-native-svg')
     implementation project(':realm')
-    implementation project(':react-native-image-picker')
     implementation project(':react-native-mail')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-gesture-handler')

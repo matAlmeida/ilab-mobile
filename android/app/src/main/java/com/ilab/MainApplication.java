@@ -6,7 +6,6 @@ import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.horcrux.svg.SvgPackage;
 import io.realm.react.RealmReactPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.chirag.RNMail.RNMail;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -33,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new SvgPackage(),
             new RealmReactPackage(),
-            new ImagePickerPackage(),
             new RNMail(),
             new VectorIconsPackage(),
             new RNGestureHandlerPackage()
