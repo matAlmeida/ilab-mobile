@@ -4,6 +4,7 @@ import Mailer from 'react-native-mail';
 import RNFetchBlob from 'rn-fetch-blob';
 
 import { getTeam, getGame } from '~/services/database';
+import { uda2matrix, matrix2csv } from '~/utils/extraction/matrix';
 
 function withTeamData(WrappedComponent) {
   return class extends React.Component {
@@ -45,41 +46,6 @@ function withTeamData(WrappedComponent) {
       );
     };
 
-    uda2matrix = (plays, players) => {
-      const idMap = players.map((player, index) => ({ id: player.id, index }));
-      const matrix = [];
-
-      for (let i = 0; i < 11; i += 1) {
-        const row = [];
-        for (let j = 0; j < 11; j += 1) {
-          const column = 0;
-          row.push(column);
-        }
-        matrix.push(row);
-      }
-
-      plays.map(play => Object.keys(play.udas)
-        .map(key => play.udas[key])
-        .map((uda) => {
-          const sender = idMap.find(mapped => mapped.id === uda.senderId);
-          const receiver = idMap.find(mapped => mapped.id === uda.receiverId);
-
-          matrix[sender.index][receiver.index] += 1;
-        }));
-
-      return matrix;
-    };
-
-    matrix2csv = (matrix) => {
-      const csv = matrix.reduce((str1, row) => {
-        const col = row.reduce((str2, column) => `${str2},${column}`, '');
-
-        return `${str1}${col.substring(1)}\n`;
-      }, '');
-
-      return csv;
-    };
-
     handleExtraction = (option, { game, gameName, team }) => {
       let plays = [];
       if (game.homeId === team.id) {
@@ -88,16 +54,15 @@ function withTeamData(WrappedComponent) {
         plays = game.awayPlays;
       }
 
-      const udaMatrix = this.uda2matrix(plays, team.players);
-      const udaCsv = this.matrix2csv(udaMatrix);
+      const udaMatrix = uda2matrix(plays, team.players);
+      const udaCsv = matrix2csv(udaMatrix);
 
       const pathToWrite = `${
         RNFetchBlob.fs.dirs.DownloadDir
       }/ilab-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`;
-      console.tron.log('pathToWrite', pathToWrite);
       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
         title: 'Permissão para salvar o Arquivo',
-        message: 'O InterativeLab precisa da permissão de' + 'armazenamento para salvar o arquivo.',
+        message: 'O InterativeLab precisa da permissão de armazenamento para salvar o arquivo.',
         buttonNeutral: 'Perguntar Depois',
         buttonNegative: 'Cancelar',
         buttonPositive: 'OK',
@@ -110,7 +75,6 @@ function withTeamData(WrappedComponent) {
                 this.handleEmail({ title: gameName, filePath: pathToWrite });
               })
               .catch(error => console.error(error));
-          } else {
           }
         })
         .catch(error => console.warn(error));
