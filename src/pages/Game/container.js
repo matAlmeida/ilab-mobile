@@ -8,11 +8,13 @@ import { uda2matrix, matrix2csv } from '~/utils/extraction/matrix';
 
 function withTeamData(WrappedComponent) {
   return class extends React.Component {
+    state = {
+      extractionOptions: [{ label: 'Matriz Completa', value: 'full-matrix' }],
+    };
+
     componentDidMount() {
       // eslint-disable-next-line react/prop-types
       const { navigation } = this.props;
-
-      this.extractionOptions = [{ label: 'Matriz Completa', value: 'full-matrix' }];
 
       this.reloadTeamInfo();
 
@@ -40,18 +42,25 @@ function withTeamData(WrappedComponent) {
         plays = game.awayPlays;
       }
 
+      const { extractionOptions } = this.state;
+      const selectedOption = extractionOptions.find(selOption => selOption.value === option);
+
       const udaCsv = this.extractSwitch(option, plays, team.players);
 
       const pathToWrite = createPath(
-        `ilab-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`,
+        `ilab-${selectedOption.value}-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`,
       );
 
       const fileWasCreated = createFile({ path: pathToWrite, data: udaCsv });
 
       if (fileWasCreated) {
         sendEmail({
-          subject: 'Relatório InterativeLab',
-          body: gameName,
+          subject: `Relatório InterativeLab | ${selectedOption.label}`,
+          body: `
+            Jogo: ${gameName}
+            Time de casa: ${team.name}
+            Formato de Extração: ${selectedOption.label}
+          `,
           attachment: { path: pathToWrite, type: 'csv' },
         });
       }
@@ -81,10 +90,12 @@ function withTeamData(WrappedComponent) {
     };
 
     render() {
+      const { extractionOptions } = this.state;
+
       return (
         <WrappedComponent
           {...this.props}
-          extractionOptions={this.extractionOptions}
+          extractionOptions={extractionOptions}
           onExtractChoose={this.handleExtraction}
         />
       );
