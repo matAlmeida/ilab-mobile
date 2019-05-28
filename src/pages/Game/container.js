@@ -1,7 +1,8 @@
 import React from 'react';
-import { Alert, PermissionsAndroid } from 'react-native';
-import Mailer from 'react-native-mail';
 import RNFetchBlob from 'rn-fetch-blob';
+
+import { sendEmail } from '~/components/EmailSender';
+import { createFile } from '~/components/FileHandler';
 
 import { getTeam, getGame } from '~/services/database';
 import { uda2matrix, matrix2csv } from '~/utils/extraction/matrix';
@@ -19,33 +20,6 @@ function withTeamData(WrappedComponent) {
       });
     }
 
-    handleEmail = ({ title, filePath }) => {
-      Mailer.mail(
-        {
-          subject: 'Relatório InterativeLab',
-          recipients: [],
-          ccRecipients: [],
-          bccRecipients: [],
-          body: `${title}`,
-          attachment: {
-            path: `${filePath}`, // The absolute path of the file from which to read data.
-            type: 'csv', // Mime Type: jpg, png, doc, ppt, html, pdf, csv
-          },
-        },
-        (error, event) => {
-          Alert.alert(
-            error,
-            event,
-            [
-              { text: 'Ok', onPress: () => console.tron.log('OK: Email Error Response') },
-              { text: 'Cancel', onPress: () => console.tron.log('CANCEL: Email Error Response') },
-            ],
-            { cancelable: true },
-          );
-        },
-      );
-    };
-
     handleExtraction = (option, { game, gameName, team }) => {
       let plays = [];
       if (game.homeId === team.id) {
@@ -60,24 +34,16 @@ function withTeamData(WrappedComponent) {
       const pathToWrite = `${
         RNFetchBlob.fs.dirs.DownloadDir
       }/ilab-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`;
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
-        title: 'Permissão para salvar o Arquivo',
-        message: 'O InterativeLab precisa da permissão de armazenamento para salvar o arquivo.',
-        buttonNeutral: 'Perguntar Depois',
-        buttonNegative: 'Cancelar',
-        buttonPositive: 'OK',
-      })
-        .then((granted) => {
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            RNFetchBlob.fs
-              .writeFile(pathToWrite, udaCsv, 'utf8')
-              .then(() => {
-                this.handleEmail({ title: gameName, filePath: pathToWrite });
-              })
-              .catch(error => console.error(error));
-          }
-        })
-        .catch(error => console.warn(error));
+
+      const fileWasCreated = createFile({ path: pathToWrite, data: udaCsv });
+
+      if (fileWasCreated) {
+        sendEmail({
+          subject: 'Relatório InterativeLab',
+          body: gameName,
+          attachment: { path: pathToWrite, type: 'csv' },
+        });
+      }
     };
 
     reloadTeamInfo = () => {
