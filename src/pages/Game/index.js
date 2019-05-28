@@ -23,7 +23,7 @@ import { withTeamData } from './container';
 
 import { backAction } from '~/utils/navigation';
 
-const Game = ({ navigation, onExtractChoose }) => {
+const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const showToast = teamName => toast({
@@ -75,7 +75,7 @@ const Game = ({ navigation, onExtractChoose }) => {
                   onClose={() => setModalVisible(false)}
                   onChoose={option => onExtractChoose(option, { game, gameName, team: homeTeam })}
                   visible={modalVisible}
-                  options={[{ label: 'Matriz Completa', value: 'full-matrix' }]}
+                  options={extractionOptions}
                 />
               </>
             )}
@@ -122,6 +122,12 @@ const Game = ({ navigation, onExtractChoose }) => {
 
 Game.propTypes = {
   onExtractChoose: PropTypes.func.isRequired,
+  extractionOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ).isRequired,
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     dispatch: PropTypes.func,

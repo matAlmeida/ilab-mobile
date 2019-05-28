@@ -1,6 +1,8 @@
 import { PermissionsAndroid } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 
+const createPath = fileName => `${RNFetchBlob.fs.dirs.DownloadDir}/${fileName}`;
+
 const createFile = async ({ path, data, encoding = 'utf8' }) => {
   const ask4PermissionAlert = {
     title: 'Permissão para criar um arquivo',
@@ -25,4 +27,4 @@ const createFile = async ({ path, data, encoding = 'utf8' }) => {
   return false;
 };
 
-export { createFile };
+export { createPath, createFile };
