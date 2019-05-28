@@ -51,9 +51,9 @@ export const getChampionship = ({ championshipId }) => new Promise((resolve, rej
 
         const retChampionship = proxyToArray(championship);
         retChampionship.teams = proxyToArray(Array.from(championship.teams));
-        Array.from(championship.teams).map(
-          (team, index) => (retChampionship.teams[index].players = proxyToArray(Array.from(team.players))),
-        );
+        Array.from(championship.teams).map((team, index) => {
+          retChampionship.teams[index].players = proxyToArray(Array.from(team.players));
+        });
         retChampionship.games = proxyToArray(Array.from(championship.games));
 
         resolve(retChampionship);
@@ -201,6 +201,25 @@ export const getGame = ({ gameId }) => new Promise((resolve, reject) => {
         retGame.awayPlays = proxyToArray(Array.from(game.awayPlays));
 
         resolve(proxyToArray(retGame));
+      });
+    })
+    .catch(error => reject(error));
+});
+
+export const getPlays = ({ gameId, teamId, filter = '' }) => new Promise((resolve, reject) => {
+  Realm.open(database)
+    .then((realm) => {
+      realm.write(() => {
+        const game = realm.objectForPrimaryKey(GAME_SCHEMA, gameId);
+        const plays = game.homeId === teamId ? game.homePlays : game.awayPlays;
+
+        if (filter) {
+          const filtered = plays.filtered(filter);
+
+          resolve(proxyToArray(Array.from(filtered)));
+        }
+
+        resolve(proxyToArray(Array.from(plays)));
       });
     })
     .catch(error => reject(error));
