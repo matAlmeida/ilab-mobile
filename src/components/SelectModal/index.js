@@ -9,7 +9,7 @@ import {
 import Colors from '~/constants/Colors';
 
 export default function SelectModal({
-  visible = false, onClose, onChoose, title, options = [],
+  visible = false, onClose, onChoose, title, options = [], children,
 }) {
   return (
     <RNModal
@@ -30,6 +30,7 @@ export default function SelectModal({
               <OptionText>{option.label}</OptionText>
             </OptionButton>
           ))}
+        { children }
       </Container>
     </RNModal>
   );
