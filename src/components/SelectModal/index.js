@@ -8,7 +8,7 @@ import {
 
 import Colors from '~/constants/Colors';
 
-export default function Modal({
+export default function SelectModal({
   visible = false, onClose, onChoose, title, options = [],
 }) {
   return (

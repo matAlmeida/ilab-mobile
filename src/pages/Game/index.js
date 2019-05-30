@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
-import Modal from '~/components/Modal';
+import SelectModal from '~/components/SelectModal';
 import toast from '~/components/Toast';
 
 import {
@@ -70,7 +70,7 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                 <TeamPlayButton onPress={() => setModalVisible(true)} disabled={!game.homeDone}>
                   <TeamPlayButtonText>Extrair</TeamPlayButtonText>
                 </TeamPlayButton>
-                <Modal
+                <SelectModal
                   title="Extrair Matriz de Adjacência"
                   onClose={() => setModalVisible(false)}
                   onChoose={option => onExtractChoose(option, { game, gameName, team: homeTeam })}
