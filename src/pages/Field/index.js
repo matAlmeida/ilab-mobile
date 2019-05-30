@@ -7,7 +7,7 @@ import FieldHeader from '~/components/FieldHeader';
 import FieldBackground from '~/components/FieldBackground';
 import PlayerChip from '~/components/PlayerChip';
 import Draggable from '~/components/Draggable';
-import Modal from '~/components/Modal';
+import SelectModal from '~/components/SelectModal';
 
 import { Container } from './styles';
 import { withGameData } from './container';
@@ -236,7 +236,7 @@ class Field extends React.Component {
           rightIcons={headerButtons}
         />
         {this.renderPlayers()}
-        <Modal
+        <SelectModal
           title="Finalizar Unidade"
           onClose={this.toogleModal('Uda')}
           onChoose={this.handleSavePlay}
@@ -248,7 +248,7 @@ class Field extends React.Component {
             { label: 'Bola Saiu do Jogo', value: 'out-of-game', color: '#f45241' },
           ]}
         />
-        <Modal
+        <SelectModal
           title="Finalizar Jogo"
           onClose={this.toogleModal('Game')}
           onChoose={this.handleFinishGame}
