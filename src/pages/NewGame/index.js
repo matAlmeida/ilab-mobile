@@ -40,7 +40,10 @@ const NewGame = ({ navigation }) => {
     <Container>
       <Header
         title="Novo Time"
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <Formik
         initialValues={{

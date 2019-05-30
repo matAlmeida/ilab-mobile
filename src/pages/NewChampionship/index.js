@@ -35,7 +35,10 @@ const NewChampionship = ({ navigation }) => {
     <Container>
       <Header
         title="Novo Campeonato"
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <Formik
         initialValues={{
@@ -44,7 +47,9 @@ const NewChampionship = ({ navigation }) => {
         validationSchema={Yup.object().shape({
           name: Yup.string().required(),
         })}
-        onSubmit={values => addChampionship({ ...values, pictureURI }, navigation.dispatch)}
+        onSubmit={(values) => {
+          addChampionship({ ...values, pictureURI }, navigation.dispatch);
+        }}
         render={({
           values,
           handleSubmit,
@@ -55,7 +60,11 @@ const NewChampionship = ({ navigation }) => {
           isValid,
         }) => (
           <>
-            <ImagePicker onPress={updateURI} style={{ marginBottom: 10 }} value={pictureURI} />
+            <ImagePicker
+              onPress={updateURI}
+              style={{ marginBottom: 10 }}
+              value={pictureURI}
+            />
             <TextInput
               label="Nome do Campeonato"
               name="name"

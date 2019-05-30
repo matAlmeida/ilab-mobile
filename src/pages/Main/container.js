@@ -29,7 +29,10 @@ function withChampionshipData(WrappedComponent) {
       this.setState({ loadingChampionship: true });
       getAllChampionships()
         .then((newChampionshipsList) => {
-          this.setState({ championshipsList: newChampionshipsList, loadingChampionship: false });
+          this.setState({
+            championshipsList: newChampionshipsList,
+            loadingChampionship: false,
+          });
         })
         .catch((error) => {
           console.error(error);

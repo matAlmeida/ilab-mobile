@@ -33,7 +33,15 @@
     "react/forbid-prop-types": "off",
     "react-native/no-inline-styles": "off",
     "array-callback-return": "off",
-    "react-native/split-platform-components": "off"
+    "react-native/split-platform-components": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 90,
+        "ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+        "ignoreUrls": true
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

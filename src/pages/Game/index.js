@@ -40,7 +40,10 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
     <Container>
       <Header
         title={gameName}
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <TeamInfoContainer>
         <TeamInfoImage source={{ uri: homeTeam.pictureURI }} />
@@ -55,25 +58,34 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
           </TitleBox>
           <TeamButtonBox>
             {!homeCanPlay && (
-              <TeamPlayButton onPress={() => navigation.navigate('Team', { team: homeTeam })}>
+              <TeamPlayButton
+                onPress={() => navigation.navigate('Team', { team: homeTeam })}
+              >
                 <TeamPlayButtonText>Arrumar</TeamPlayButtonText>
               </TeamPlayButton>
             )}
             {homeCanPlay && (
               <>
                 <TeamPlayButton
-                  onPress={() => navigation.navigate('Field', { game, team: homeTeam })}
+                  onPress={() => {
+                    navigation.navigate('Field', { game, team: homeTeam });
+                  }}
                   disabled={game.homeDone}
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
-                <TeamPlayButton onPress={() => setModalVisible(true)} disabled={!game.homeDone}>
+                <TeamPlayButton
+                  onPress={() => setModalVisible(true)}
+                  disabled={!game.homeDone}
+                >
                   <TeamPlayButtonText>Extrair</TeamPlayButtonText>
                 </TeamPlayButton>
                 <SelectModal
                   title="Extrair Matriz de Adjacência"
                   onClose={() => setModalVisible(false)}
-                  onChoose={option => onExtractChoose(option, { game, gameName, team: homeTeam })}
+                  onChoose={(option) => {
+                    onExtractChoose(option, { game, gameName, team: homeTeam });
+                  }}
                   visible={modalVisible}
                   options={extractionOptions}
                 />
@@ -96,14 +108,18 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
           </TitleBox>
           <TeamButtonBox>
             {!awayCanPlay && (
-              <TeamPlayButton onPress={() => navigation.navigate('Team', { team: awayTeam })}>
+              <TeamPlayButton
+                onPress={() => navigation.navigate('Team', { team: awayTeam })}
+              >
                 <TeamPlayButtonText>Arrumar</TeamPlayButtonText>
               </TeamPlayButton>
             )}
             {awayCanPlay && (
               <>
                 <TeamPlayButton
-                  onPress={() => navigation.navigate('Field', { game, team: awayTeam })}
+                  onPress={() => {
+                    navigation.navigate('Field', { game, team: awayTeam });
+                  }}
                   disabled={game.awayDone}
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>

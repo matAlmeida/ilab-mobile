@@ -52,7 +52,10 @@ const Team = ({
     <Container>
       <Header
         title={team.name}
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <ListContentBox
         title="Jogadores"

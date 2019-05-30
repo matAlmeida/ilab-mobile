@@ -43,12 +43,16 @@ function withTeamData(WrappedComponent) {
       }
 
       const { extractionOptions } = this.state;
-      const selectedOption = extractionOptions.find(selOption => selOption.value === option);
+      const selectedOption = extractionOptions.find(
+        selOption => selOption.value === option,
+      );
 
       const udaCsv = this.extractSwitch(option, plays, team.players);
 
       const pathToWrite = createPath(
-        `ilab-${selectedOption.value}-${team.name.toLowerCase().replace(' ', '-')}-${game.id}.csv`,
+        `ilab-${selectedOption.value}-${team.name
+          .toLowerCase()
+          .replace(' ', '-')}-${game.id}.csv`,
       );
 
       const fileWasCreated = createFile({ path: pathToWrite, data: udaCsv });

@@ -39,7 +39,10 @@ const NewPlayer = ({ navigation }) => {
     <Container>
       <Header
         title="Novo Time"
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <Formik
         initialValues={{
@@ -62,7 +65,11 @@ const NewPlayer = ({ navigation }) => {
           isValid,
         }) => (
           <>
-            <ImagePicker onPress={updateURI} style={{ marginBottom: 10 }} value={pictureURI} />
+            <ImagePicker
+              onPress={updateURI}
+              style={{ marginBottom: 10 }}
+              value={pictureURI}
+            />
             <TextInput
               label="Nome do Jogador"
               name="name"

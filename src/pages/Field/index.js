@@ -71,7 +71,10 @@ class Field extends React.Component {
     }));
   };
 
-  incrementGameTime = () => this.setState(prevState => ({ ...prevState, gameTime: prevState.gameTime + 1 }));
+  incrementGameTime = () => this.setState(prevState => ({
+    ...prevState,
+    gameTime: prevState.gameTime + 1,
+  }));
 
   handleStartGame = () => {
     this.setState(prevState => ({
@@ -79,8 +82,16 @@ class Field extends React.Component {
       readyToPlay: true,
       pageTitle: '00:00',
       headerButtons: [
-        { name: 'whistle', onPress: this.toogleModal('Game'), type: 'material-community' },
-        { name: 'soccer', onPress: this.toogleModal('Uda'), type: 'material-community' },
+        {
+          name: 'whistle',
+          onPress: this.toogleModal('Game'),
+          type: 'material-community',
+        },
+        {
+          name: 'soccer',
+          onPress: this.toogleModal('Uda'),
+          type: 'material-community',
+        },
       ],
     }));
 
@@ -176,7 +187,10 @@ class Field extends React.Component {
           yPos: player.yPos + y,
         };
 
-        this.setState(prevState => ({ ...prevState, formation: this.newFormation }));
+        this.setState(prevState => ({
+          ...prevState,
+          formation: this.newFormation,
+        }));
       }
     });
   };
@@ -220,7 +234,10 @@ class Field extends React.Component {
 
   render() {
     const {
-      pageTitle, headerButtons, finishUdaModalVisible, finishGameModalVisible,
+      pageTitle,
+      headerButtons,
+      finishUdaModalVisible,
+      finishGameModalVisible,
     } = this.state;
     const { navigation } = this.props;
 
@@ -245,7 +262,11 @@ class Field extends React.Component {
             { label: 'Gol', value: 'goal' },
             { label: 'Finalização', value: 'finishe', color: '#f4aa42' },
             { label: 'Interceptação', value: 'intercept', color: '#41d0f4' },
-            { label: 'Bola Saiu do Jogo', value: 'out-of-game', color: '#f45241' },
+            {
+              label: 'Bola Saiu do Jogo',
+              value: 'out-of-game',
+              color: '#f45241',
+            },
           ]}
         />
         <SelectModal

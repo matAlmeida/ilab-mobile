@@ -14,7 +14,12 @@ import teamIcon from '~/assets/team-icon.png';
 import { backAction } from '~/utils/navigation';
 
 const Championship = ({
-  teamsList, gamesList, navigation, onRefresh, refreshing, onDelete,
+  teamsList,
+  gamesList,
+  navigation,
+  onRefresh,
+  refreshing,
+  onDelete,
 }) => {
   const removeItem = (item, type) => {
     Alert.alert(
@@ -54,7 +59,9 @@ const Championship = ({
       <ListGameItem
         homeTeam={homeTeam}
         awayTeam={awayTeam}
-        onPress={() => navigation.navigate(path, { game: item, homeTeam, awayTeam })}
+        onPress={() => {
+          navigation.navigate(path, { game: item, homeTeam, awayTeam });
+        }}
         onLongPress={() => removeItem({ ...item, name: gameName }, path)}
       />
     );
@@ -66,7 +73,10 @@ const Championship = ({
     <Container>
       <Header
         title={championship.name}
-        leftIcon={{ name: 'arrow-back', onPress: () => navigation.dispatch(backAction()) }}
+        leftIcon={{
+          name: 'arrow-back',
+          onPress: () => navigation.dispatch(backAction()),
+        }}
       />
       <ListContentBox
         title="Times"
