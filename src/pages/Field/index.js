@@ -14,6 +14,22 @@ import { withGameData } from './container';
 
 import { backAction } from '~/utils/navigation';
 
+export const udaEnds = [
+  { label: 'Gol', value: 'goal' },
+  { label: 'Finalização', value: 'finisher', color: '#f4aa42' },
+  { label: 'Interceptação', value: 'intercept', color: '#41d0f4' },
+  {
+    label: 'Bola Saiu do Jogo',
+    value: 'out-of-game',
+    color: '#f45241',
+  },
+];
+
+export const gameEnds = [
+  { label: 'Finalizar Jogo', value: 'end-game', color: '#f4aa42' },
+  { label: 'Cancelar', value: 'cancel', color: '#f45241' },
+];
+
 class Field extends React.Component {
   state = {
     disableDrag: false,
@@ -258,26 +274,14 @@ class Field extends React.Component {
           onClose={this.toogleModal('Uda')}
           onChoose={this.handleSavePlay}
           visible={finishUdaModalVisible}
-          options={[
-            { label: 'Gol', value: 'goal' },
-            { label: 'Finalização', value: 'finishe', color: '#f4aa42' },
-            { label: 'Interceptação', value: 'intercept', color: '#41d0f4' },
-            {
-              label: 'Bola Saiu do Jogo',
-              value: 'out-of-game',
-              color: '#f45241',
-            },
-          ]}
+          options={udaEnds}
         />
         <SelectModal
           title="Finalizar Jogo"
           onClose={this.toogleModal('Game')}
           onChoose={this.handleFinishGame}
           visible={finishGameModalVisible}
-          options={[
-            { label: 'Finalizar Jogo', value: 'end-game', color: '#f4aa42' },
-            { label: 'Cancelar', value: 'cancel', color: '#f45241' },
-          ]}
+          options={gameEnds}
         />
       </Container>
     );

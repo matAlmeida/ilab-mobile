@@ -64,3 +64,34 @@ export const WarningIcon = styled(Icon).attrs({
 export const WarningButton = styled.TouchableOpacity`
   margin-left: 20px;
 `;
+
+export const FilterBox = styled.View`
+  margin-top: 10px;
+  width: 90%;
+`;
+
+export const FilterTitle = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+`;
+
+export const SliderBox = styled.View`
+  flex-direction: row;
+  width: 100%;
+`;
+
+export const SliderValueBox = styled.View`
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-right: 5px;
+  border: 1px solid lightgray;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SliderValueText = styled.Text`
+  font-size: 14px;
+  color: black;
+`;

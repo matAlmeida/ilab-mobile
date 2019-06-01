@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
+import { CheckBox, Slider } from 'react-native-elements';
 
 import Header from '~/components/Header';
 import SelectModal from '~/components/SelectModal';
@@ -17,14 +19,28 @@ import {
   WarningIcon,
   WarningButton,
   TitleBox,
+  FilterBox,
+  FilterTitle,
+  SliderBox,
+  SliderValueBox,
+  SliderValueText,
 } from './styles';
 
+import { udaEnds } from '~/pages/Field';
 import { withTeamData } from './container';
 
+import Colors from '~/constants/Colors';
 import { backAction } from '~/utils/navigation';
 
 const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const initialFilters = udaEnds.reduce(
+    (agg, end) => ({ ...agg, [end.value]: true }),
+    {},
+  );
+  const [selectedFilter, setSelectedFilter] = useState(initialFilters);
+  const [initialTimerFilter, setInitialTimerFilter] = useState(0);
+  const [finalTimerFilter, setFinalTimerFilter] = useState(90);
 
   const showToast = teamName => toast({
     message: `O time "${teamName}" não tem o número minímo de jogadores.`,
@@ -88,7 +104,54 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                   }}
                   visible={modalVisible}
                   options={extractionOptions}
-                />
+                >
+                  <FilterBox>
+                    {udaEnds.map(end => (
+                      <CheckBox
+                        key={end.value}
+                        title={end.label}
+                        checked={selectedFilter[end.value]}
+                        onPress={() => setSelectedFilter({
+                          ...selectedFilter,
+                          [end.value]: !selectedFilter[end.value],
+                        })
+                        }
+                      />
+                    ))}
+                    <FilterTitle>Tempo Inicial</FilterTitle>
+                    <SliderBox>
+                      <SliderValueBox>
+                        <SliderValueText>{initialTimerFilter}</SliderValueText>
+                      </SliderValueBox>
+                      <View style={{ flex: 1 }}>
+                        <Slider
+                          value={initialTimerFilter}
+                          onValueChange={value => setInitialTimerFilter(value)}
+                          thumbTintColor={Colors.tintColor}
+                          minimumValue={0}
+                          maximumValue={90}
+                          step={1}
+                        />
+                      </View>
+                    </SliderBox>
+                    <FilterTitle>Tempo Final</FilterTitle>
+                    <SliderBox>
+                      <SliderValueBox>
+                        <SliderValueText>{finalTimerFilter}</SliderValueText>
+                      </SliderValueBox>
+                      <View style={{ flex: 1 }}>
+                        <Slider
+                          value={finalTimerFilter}
+                          onValueChange={value => setFinalTimerFilter(value)}
+                          thumbTintColor={Colors.tintColor}
+                          minimumValue={0}
+                          maximumValue={90}
+                          step={1}
+                        />
+                      </View>
+                    </SliderBox>
+                  </FilterBox>
+                </SelectModal>
               </>
             )}
           </TeamButtonBox>

@@ -9,7 +9,7 @@ import { uda2matrix, matrix2csv } from '~/utils/extraction/matrix';
 function withTeamData(WrappedComponent) {
   return class extends React.Component {
     state = {
-      extractionOptions: [{ label: 'Matriz Completa', value: 'full-matrix' }],
+      extractionOptions: [{ label: 'Matriz', value: 'full-matrix' }],
     };
 
     componentDidMount() {
