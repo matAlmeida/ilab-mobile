@@ -33,24 +33,27 @@ import Colors from '~/constants/Colors';
 import { backAction } from '~/utils/navigation';
 
 const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const initialFilters = udaEnds.reduce(
-    (agg, end) => ({ ...agg, [end.value]: true }),
-    {},
-  );
-  const [selectedFilter, setSelectedFilter] = useState(initialFilters);
-  const [initialTimerFilter, setInitialTimerFilter] = useState(0);
-  const [finalTimerFilter, setFinalTimerFilter] = useState(90);
-
-  const showToast = teamName => toast({
-    message: `O time "${teamName}" não tem o número minímo de jogadores.`,
-  });
-
   const { game, homeTeam, awayTeam } = navigation.state.params;
   const gameName = `${homeTeam.name} x ${awayTeam.name}`;
 
   const homeCanPlay = homeTeam.players.length >= 11;
   const awayCanPlay = awayTeam.players.length >= 11;
+
+  const initialFilters = udaEnds.reduce(
+    (agg, end) => ({ ...agg, [end.value]: true }),
+    {},
+  );
+
+  const gameDuration = parseInt(game.finishedAt / 60, 10) + 1;
+
+  const [selectedFilter, setSelectedFilter] = useState(initialFilters);
+  const [initialTimerFilter, setInitialTimerFilter] = useState(0);
+  const [finalTimerFilter, setFinalTimerFilter] = useState(gameDuration);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const showToast = teamName => toast({
+    message: `O time "${teamName}" não tem o número minímo de jogadores.`,
+  });
 
   return (
     <Container>
@@ -118,7 +121,7 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                         }
                       />
                     ))}
-                    <FilterTitle>Tempo Inicial</FilterTitle>
+                    <FilterTitle>Tempo Inicial (minutos)</FilterTitle>
                     <SliderBox>
                       <SliderValueBox>
                         <SliderValueText>{initialTimerFilter}</SliderValueText>
@@ -129,12 +132,12 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                           onValueChange={value => setInitialTimerFilter(value)}
                           thumbTintColor={Colors.tintColor}
                           minimumValue={0}
-                          maximumValue={90}
+                          maximumValue={gameDuration}
                           step={1}
                         />
                       </View>
                     </SliderBox>
-                    <FilterTitle>Tempo Final</FilterTitle>
+                    <FilterTitle>Tempo Final (minutos)</FilterTitle>
                     <SliderBox>
                       <SliderValueBox>
                         <SliderValueText>{finalTimerFilter}</SliderValueText>
@@ -145,7 +148,7 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                           onValueChange={value => setFinalTimerFilter(value)}
                           thumbTintColor={Colors.tintColor}
                           minimumValue={0}
-                          maximumValue={90}
+                          maximumValue={gameDuration}
                           step={1}
                         />
                       </View>
