@@ -103,7 +103,19 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                   title="Extrair Matriz de Adjacência"
                   onClose={() => setModalVisible(false)}
                   onChoose={(option) => {
-                    onExtractChoose(option, { game, gameName, team: homeTeam });
+                    onExtractChoose(
+                      option,
+                      {
+                        game,
+                        gameName,
+                        team: homeTeam,
+                        filters: {
+                          ...selectedFilter,
+                          initialTimer: initialTimerFilter,
+                          finalTimer: finalTimerFilter,
+                        },
+                      },
+                    );
                   }}
                   visible={modalVisible}
                   options={extractionOptions}
