@@ -155,7 +155,7 @@ export const insertNewGame = ({
 });
 
 export const updateGame = ({
-  id, homeDone, awayDone, homePlays, awayPlays,
+  id, homeDone, awayDone, homePlays, awayPlays, finishedAt,
 }) => new Promise((resolve, reject) => {
   Realm.open(database)
     .then((realm) => {
@@ -168,6 +168,7 @@ export const updateGame = ({
           awayDone,
           homePlays,
           awayPlays,
+          finishedAt,
         };
 
         realm.create(GAME_SCHEMA, updatedGame, 'modified');

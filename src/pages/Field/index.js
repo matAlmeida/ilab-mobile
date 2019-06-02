@@ -173,6 +173,7 @@ class Field extends React.Component {
 
     const newGame = {
       id: game.id,
+      finishedAt: allPlays[allPlays.length - 1].finishedAt,
     };
 
     if (game.homeId === team.id) {
