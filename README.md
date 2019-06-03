@@ -1,7 +1,7 @@
 # ⚽️ Interative Lab
 
-<a href="https://codeclimate.com/github/matAlmeida/interative-lab/maintainability">
-  <img src="https://api.codeclimate.com/v1/badges/ecc4e06e2be1b484c319/maintainability" />
+<a href="https://codeclimate.com/github/matAlmeida/ilab/maintainability">
+  <img src="https://api.codeclimate.com/v1/badges/6901492ab8da9bfa7543/maintainability" />
 </a>
 <a href="https://github.com/jacobwgillespie/styled-icons">
   <img src="https://img.shields.io/badge/built%20with-styled%20components-db7093.svg" />
