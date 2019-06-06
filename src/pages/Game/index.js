@@ -202,7 +202,10 @@ const Game = ({ navigation, onExtractChoose, extractionOptions }) => {
                 >
                   <TeamPlayButtonText>Jogar</TeamPlayButtonText>
                 </TeamPlayButton>
-                <TeamPlayButton disabled={!game.awayDone}>
+                <TeamPlayButton
+                  onPress={() => setModalVisible(true)}
+                  disabled={!game.awayDone}
+                >
                   <TeamPlayButtonText>Extrair</TeamPlayButtonText>
                 </TeamPlayButton>
               </>
