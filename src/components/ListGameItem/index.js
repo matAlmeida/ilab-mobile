@@ -18,8 +18,12 @@ const ListGameItem = ({ homeTeam, awayTeam, ...rest }) => (
       <ListItemName>{homeTeam.name}</ListItemName>
     </ListItemNameBox>
     <ListItemImageBox>
-      <ListItemSportPicture source={homeTeam.pictureURI ? { uri: homeTeam.pictureURI } : noImage} />
-      <ListItemPicture source={awayTeam.pictureURI ? { uri: awayTeam.pictureURI } : noImage} />
+      <ListItemSportPicture
+        source={awayTeam.pictureURI ? { uri: awayTeam.pictureURI } : noImage}
+      />
+      <ListItemPicture
+        source={homeTeam.pictureURI ? { uri: homeTeam.pictureURI } : noImage}
+      />
     </ListItemImageBox>
     <ListItemNameBox>
       <ListItemName>{awayTeam.name}</ListItemName>
