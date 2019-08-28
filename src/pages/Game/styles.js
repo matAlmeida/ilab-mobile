@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styled from 'styled-components/native';
 
@@ -18,6 +19,9 @@ export const TeamInfoContainer = styled.View`
 export const TeamInfoImage = styled.Image`
   height: 125px;
   width: 125px;
+  border-radius: 72px;
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: #222;
 `;
 
 export const TeamInfoBox = styled.View`
