@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import timer from 'react-native-timer';
 import * as uuid from 'uuid';
+import KeepAwake from 'react-native-keep-awake';
 
 import FieldHeader from '~/components/FieldHeader';
 import FieldBackground from '~/components/FieldBackground';
@@ -284,6 +285,7 @@ class Field extends React.Component {
           visible={finishGameModalVisible}
           options={gameEnds}
         />
+        <KeepAwake />
       </Container>
     );
   }
