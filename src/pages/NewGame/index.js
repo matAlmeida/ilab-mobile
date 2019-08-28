@@ -39,7 +39,7 @@ const NewGame = ({ navigation }) => {
   return (
     <Container>
       <Header
-        title="Novo Time"
+        title="Nova Partida"
         leftIcon={{
           name: 'arrow-back',
           onPress: () => navigation.dispatch(backAction()),

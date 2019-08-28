@@ -38,7 +38,7 @@ const NewPlayer = ({ navigation }) => {
   return (
     <Container>
       <Header
-        title="Novo Time"
+        title="Novo Jogador"
         leftIcon={{
           name: 'arrow-back',
           onPress: () => navigation.dispatch(backAction()),
