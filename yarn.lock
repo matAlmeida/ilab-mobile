@@ -5936,6 +5936,11 @@ react-native-image-crop-picker@^0.24.1:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.24.1.tgz#4408e2bb20e3c082c0191e0acf0c8c7a1e9804ea"
   integrity sha512-M+6iFhDXPDtf++X+fvb5mKkLw2978SbyPVVQHigktgKONxtTZtBiOOtYfBUIkPaSetP20P9q4iwOu+iTaZ/R+w==
 
+react-native-keep-awake@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-4.0.0.tgz#d89fdc3fb60b3cffa979ef37dc5816196df998a2"
+  integrity sha512-0Fotox+eLXQooeibVs3P60yASYUWjtRw9MZNmbuHt5UZQrgUrAKsE4jm7gTr4tPU1m1RkwGzcgUFpcOkh/ec7g==
+
 react-native-keyboard-aware-scrollview@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-2.0.0.tgz#a7e2cc31b7230893db5dc05eb6fed3f358500a55"
