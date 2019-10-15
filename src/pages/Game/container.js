@@ -26,14 +26,18 @@ function withTeamData(WrappedComponent) {
     }
 
     extractSwitch = (option, plays, players) => {
-      if (option === 'full-matrix') {
-        const udaMatrix = uda2matrix(plays, players);
-        const udaCsv = matrix2csv(udaMatrix);
+      // if (option === 'full-matrix') {
+      //   const udaMatrix = uda2matrix(plays, players);
+      //   const udaCsv = matrix2csv(udaMatrix);
 
-        return udaCsv;
-      }
+      //   return udaCsv;
+      // }
 
-      return new Error(`Extraction opntion "${option}" doesn't exist.`);
+      // return new Error(`Extraction opntion "${option}" doesn't exist.`);
+      const udaMatrix = uda2matrix(plays, players);
+      const udaCsv = matrix2csv(udaMatrix);
+
+      return udaCsv;
     };
 
     getFiltersLabel = ({ initialTimer, finalTimer, ...filters }) => {
@@ -54,7 +58,7 @@ function withTeamData(WrappedComponent) {
     };
 
     filterPlays = (plays, filters) => {
-      const filteredPlays = [];
+      // const filteredPlays = [];
       const { initialTimer, finalTimer, ...typeFilters } = filters;
 
       let filterString = `${initialTimer}min-${finalTimer}min`;
@@ -63,17 +67,18 @@ function withTeamData(WrappedComponent) {
         if (filters[filter]) {
           filterString += `-${filter}`;
 
-          const newPlays = plays.filter(
-            play => play.type === filter
-              && play.finishedAt >= (initialTimer > 0 && initialTimer * 60)
-              && play.finishedAt <= finalTimer * 60,
-          );
+          // const newPlays = plays.filter(
+          //   play => play.type === filter
+          //     && play.finishedAt >= (initialTimer > 0 && initialTimer * 60)
+          //     && play.finishedAt <= finalTimer * 60,
+          // );
 
-          filteredPlays.push(...newPlays);
+          // filteredPlays.push(...newPlays);
         }
       });
 
-      return [filteredPlays, filterString];
+      // return [filteredPlays, filterString];
+      return [plays, filterString];
     };
 
     handleExtraction = (option, {
@@ -98,7 +103,7 @@ function withTeamData(WrappedComponent) {
       const pathToWrite = createPath(
         `ilab-${selectedOption.value}-${team.name.toLowerCase().replace(' ', '-')}-${
           game.id
-        }-${filterString}.csv`,
+        }-${filterString}.txt`,
       );
 
       const fileWasCreated = createFile({ path: pathToWrite, data: udaCsv });
@@ -112,7 +117,7 @@ function withTeamData(WrappedComponent) {
             Formato de Extração: ${selectedOption.label}
             ${this.getFiltersLabel(filters)}
           `,
-          attachment: { path: pathToWrite, type: 'csv' },
+          attachment: { path: pathToWrite, type: 'txt' },
         });
       }
     };
