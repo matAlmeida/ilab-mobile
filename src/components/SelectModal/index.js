@@ -2,9 +2,7 @@
 import React from 'react';
 import RNModal from 'react-native-modal';
 
-import {
-  Container, Title, OptionButton, OptionText,
-} from './styles';
+import { Container, Title, OptionButton, OptionText } from './styles';
 
 import Colors from '~/constants/Colors';
 
@@ -21,17 +19,15 @@ export default function SelectModal({
       isVisible={visible}
       onBackdropPress={onClose}
       swipeDirection="down"
-      onSwipeComplete={onClose}
-    >
+      onSwipeComplete={onClose}>
       <Container>
         <Title>{title}</Title>
-        {options
-          && options.map(option => (
+        {options &&
+          options.map(option => (
             <OptionButton
               key={option.value}
               style={{ backgroundColor: option.color || Colors.tintColor }}
-              onPress={() => onChoose(option.value)}
-            >
+              onPress={() => onChoose(option.value)}>
               <OptionText>{option.label}</OptionText>
             </OptionButton>
           ))}

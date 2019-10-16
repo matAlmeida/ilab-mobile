@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import timer from 'react-native-timer';
 import * as uuid from 'uuid';
+import KeepAwake from 'react-native-keep-awake';
 
 import FieldHeader from '~/components/FieldHeader';
 import FieldBackground from '~/components/FieldBackground';
@@ -87,10 +88,11 @@ class Field extends React.Component {
     }));
   };
 
-  incrementGameTime = () => this.setState(prevState => ({
-    ...prevState,
-    gameTime: prevState.gameTime + 1,
-  }));
+  incrementGameTime = () =>
+    this.setState(prevState => ({
+      ...prevState,
+      gameTime: prevState.gameTime + 1,
+    }));
 
   handleStartGame = () => {
     this.setState(prevState => ({
@@ -114,7 +116,7 @@ class Field extends React.Component {
     timer.setInterval('gameTimeInterval', this.incrementGameTime, 1000);
   };
 
-  handleSavePlay = (choosedOption) => {
+  handleSavePlay = choosedOption => {
     const { currentPlay, allPlays, gameTime } = this.state;
     const {
       navigation: {
@@ -146,7 +148,7 @@ class Field extends React.Component {
     this.toogleModal('Uda');
   };
 
-  handleFinishGame = (choosedOption) => {
+  handleFinishGame = choosedOption => {
     const { navigation } = this.props;
 
     switch (choosedOption) {
@@ -197,7 +199,7 @@ class Field extends React.Component {
     const { x, y } = value;
     const { playersList } = this.props;
 
-    playersList.map((player) => {
+    playersList.map(player => {
       if (player.id === playerId) {
         this.newFormation[playerId] = {
           xPos: player.xPos + x,
@@ -212,7 +214,7 @@ class Field extends React.Component {
     });
   };
 
-  handlePlayerPress = (playerId) => {
+  handlePlayerPress = playerId => {
     const { readyToPlay, currentPlayerId, currentPlay } = this.state;
 
     if (readyToPlay) {
@@ -242,8 +244,7 @@ class Field extends React.Component {
         x={player.xPos}
         y={player.yPos}
         pressDrag={() => this.handlePlayerPress(player.id)}
-        pressDragRelease={value => this.handleReleasePlayer(player.id, value)}
-      >
+        pressDragRelease={value => this.handleReleasePlayer(player.id, value)}>
         <PlayerChip hasBall={currentPlayerId === player.id} {...player} />
       </Draggable>
     ));
@@ -284,6 +285,7 @@ class Field extends React.Component {
           visible={finishGameModalVisible}
           options={gameEnds}
         />
+        <KeepAwake />
       </Container>
     );
   }

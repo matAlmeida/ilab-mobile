@@ -1,7 +1,11 @@
 import { Alert } from 'react-native';
 import Mailer from 'react-native-mail';
 
-const sendEmail = ({ subject, body, attachment: { path, type } = { path: '', type: '' } }) => {
+const sendEmail = ({
+  subject,
+  body,
+  attachment: { path, type } = { path: '', type: '' },
+}) => {
   Mailer.mail(
     {
       subject,
@@ -19,8 +23,14 @@ const sendEmail = ({ subject, body, attachment: { path, type } = { path: '', typ
         error,
         event,
         [
-          { text: 'Ok', onPress: () => console.tron.log('OK: Email Error Response') },
-          { text: 'Cancel', onPress: () => console.tron.log('CANCEL: Email Error Response') },
+          {
+            text: 'Ok',
+            onPress: () => console.tron.log('OK: Email Error Response'),
+          },
+          {
+            text: 'Cancel',
+            onPress: () => console.tron.log('CANCEL: Email Error Response'),
+          },
         ],
         { cancelable: true },
       );

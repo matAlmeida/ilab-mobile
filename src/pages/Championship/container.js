@@ -3,7 +3,7 @@ import React from 'react';
 import { getChampionship, deleteTeam, deleteGame } from '~/services/database';
 
 function withChampionshipData(WrappedComponent) {
-  return class extends React.Component {
+  return class ComponentWithChampionshipData extends React.Component {
     state = { championship: {}, loadingChampionship: false };
 
     componentDidMount() {
@@ -40,11 +40,11 @@ function withChampionshipData(WrappedComponent) {
 
       this.setState({ loadingChampionship: true });
       getChampionship({ championshipId: id })
-        .then((championship) => {
+        .then(championship => {
           navigation.setParams({ championship });
           this.setState({ championship, loadingChampionship: false });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           this.setState({ loadingChampionship: false, championship: {} });
         });

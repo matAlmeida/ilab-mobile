@@ -1,7 +1,11 @@
 /* eslint react/prop-types: 0 */
 /* eslint react-native/split-platform-components: 0 */
 import React from 'react';
-import { ActionSheetIOS, Platform, TouchableWithoutFeedback } from 'react-native';
+import {
+  ActionSheetIOS,
+  Platform,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import {
@@ -16,7 +20,7 @@ import {
 class SelectInput extends React.Component {
   state = { selectedValue: 'none', selectedIndex: 0 };
 
-  handleChange = (value) => {
+  handleChange = value => {
     const { onChange, name } = this.props;
 
     onChange(name, value);
@@ -28,7 +32,7 @@ class SelectInput extends React.Component {
       {
         options: items.map(item => item.label),
       },
-      (itemIndex) => {
+      itemIndex => {
         this.setState({
           selectedValue: items[itemIndex].value,
           selectedIndex: itemIndex,
@@ -51,7 +55,11 @@ class SelectInput extends React.Component {
             <TouchableWithoutFeedback onPress={this.onIosPress}>
               <IosPickerBox>
                 <IosPickerText>{items[selectedIndex].label}</IosPickerText>
-                <Icon name="arrow-drop-down" size={24} containerStyle={{ paddingRight: 7 }} />
+                <Icon
+                  name="arrow-drop-down"
+                  size={24}
+                  containerStyle={{ paddingRight: 7 }}
+                />
               </IosPickerBox>
             </TouchableWithoutFeedback>
           )}
@@ -64,10 +72,13 @@ class SelectInput extends React.Component {
                   selectedIndex: itemIndex,
                 });
                 this.handleChange(itemValue, itemIndex);
-              }}
-            >
+              }}>
               {items.map(item => (
-                <Picker.Item label={item.label} value={item.value} key={item.value} />
+                <Picker.Item
+                  label={item.label}
+                  value={item.value}
+                  key={item.value}
+                />
               ))}
             </Picker>
           )}

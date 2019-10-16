@@ -2,11 +2,9 @@
 import React from 'react';
 import RNImagePicker from 'react-native-image-crop-picker';
 
-import {
-  Container, AddImageButton, CameraIcon, Picture,
-} from './styles';
+import { Container, AddImageButton, CameraIcon, Picture } from './styles';
 
-const handleRejection = async (fn) => {
+const handleRejection = async fn => {
   const response = await fn().catch(error => error);
 
   return response;
@@ -23,17 +21,18 @@ const ImagePicker = ({ onPress, value, style }) => (
 
 export default ImagePicker;
 
-const openImagePicker = () => new Promise((resolve, reject) => {
-  RNImagePicker.openPicker({
-    cropping: true,
-    mediaType: 'photo',
-    compressImageQuality: 0.8,
-    includeBase64: true,
-  })
-    .then((image) => {
-      resolve(`data:${image.mime};base64,${image.data}`);
+const openImagePicker = () =>
+  new Promise((resolve, reject) => {
+    RNImagePicker.openPicker({
+      cropping: true,
+      mediaType: 'photo',
+      compressImageQuality: 0.8,
+      includeBase64: true,
     })
-    .catch(error => reject(error));
-});
+      .then(image => {
+        resolve(`data:${image.mime};base64,${image.data}`);
+      })
+      .catch(error => reject(error));
+  });
 
 export { openImagePicker };

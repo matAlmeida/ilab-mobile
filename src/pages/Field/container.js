@@ -1,11 +1,14 @@
 import React from 'react';
 
 import {
-  getGame, getTeam, updatePlayerPos, updateGame,
+  getGame,
+  getTeam,
+  updatePlayerPos,
+  updateGame,
 } from '~/services/database';
 
 function withGameData(WrappedComponent) {
-  return class extends React.Component {
+  return class ComponentWithGameData extends React.Component {
     state = {
       game: {},
       team: {},
@@ -35,31 +38,31 @@ function withGameData(WrappedComponent) {
 
       this.setState({ loadingGame: true, loadingTeam: true });
       getGame({ gameId })
-        .then((game) => {
+        .then(game => {
           navigation.setParams({ game });
           this.setState({ game, loadingGame: false });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           this.setState({ loadingGame: false, game: {} });
         });
 
       getTeam({ teamId })
-        .then((team) => {
+        .then(team => {
           navigation.setParams({ team });
           this.setState({ team, loadingTeam: false });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           this.setState({ loadingTeam: false, team: {} });
         });
     };
 
-    handleUpdatePlayers = async (players) => {
+    handleUpdatePlayers = async players => {
       this.setState({ savingPlayers: true });
 
       await Promise.all(
-        Object.keys(players).map(async (playerId) => {
+        Object.keys(players).map(async playerId => {
           try {
             await updatePlayerPos({ ...players[playerId], id: playerId });
           } catch (error) {

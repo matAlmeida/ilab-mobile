@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {
-  Container, NumberBox, NumberText, PlayerPicture,
-} from './styles';
+import { Container, NumberBox, NumberText, PlayerPicture } from './styles';
 
 import noImage from '~/assets/no-image.png';
 
@@ -12,7 +10,10 @@ const PlayerChip = ({ pictureURI, number, hasBall = false }) => (
     <NumberBox hasBall={hasBall}>
       <NumberText>{`${number > 9 ? '' : '0'}${number}`}</NumberText>
     </NumberBox>
-    <PlayerPicture hasBall={hasBall} source={pictureURI ? { uri: pictureURI } : noImage} />
+    <PlayerPicture
+      hasBall={hasBall}
+      source={pictureURI ? { uri: pictureURI } : noImage}
+    />
   </Container>
 );
 

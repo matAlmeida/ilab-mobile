@@ -16,11 +16,24 @@ const FieldBackground = () => {
       <Svg
         width={width + 1}
         height={height}
-        viewBox={`-${vbWidth} -${vbHeight} ${width} ${height}`}
-      >
-        <Circle cx="0" cy="0" r="45" stroke="white" strokeWidth="7" fill="transparent" />
+        viewBox={`-${vbWidth} -${vbHeight} ${width} ${height}`}>
+        <Circle
+          cx="0"
+          cy="0"
+          r="45"
+          stroke="white"
+          strokeWidth="7"
+          fill="transparent"
+        />
         <Circle cx="0" cy="0" r="10" fill="white" />
-        <Line x1={`-${vbWidth}`} y1="0" x2={`${vbWidth}`} y2="0" stroke="white" strokeWidth="7" />
+        <Line
+          x1={`-${vbWidth}`}
+          y1="0"
+          x2={`${vbWidth}`}
+          y2="0"
+          stroke="white"
+          strokeWidth="7"
+        />
       </Svg>
     </Container>
   );

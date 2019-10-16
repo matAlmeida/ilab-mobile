@@ -9,10 +9,6 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const ListBox = styled.ScrollView`
-  width: 100%;
-`;
-
 export const List = styled(FlatList)`
   flex: 1;
   width: 100%;

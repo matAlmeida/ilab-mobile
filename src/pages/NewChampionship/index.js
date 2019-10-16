@@ -47,7 +47,7 @@ const NewChampionship = ({ navigation }) => {
         validationSchema={Yup.object().shape({
           name: Yup.string().required(),
         })}
-        onSubmit={(values) => {
+        onSubmit={values => {
           addChampionship({ ...values, pictureURI }, navigation.dispatch);
         }}
         render={({

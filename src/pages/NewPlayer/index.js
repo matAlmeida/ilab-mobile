@@ -12,9 +12,7 @@ import { Container, AddButton, AddButtonText } from './styles';
 import { backAction } from '~/utils/navigation';
 import { insertNewPlayer } from '~/services/database';
 
-const addPlayer = ({
-  team, name, number, pictureURI,
-}, dispatch) => {
+const addPlayer = ({ team, name, number, pictureURI }, dispatch) => {
   insertNewPlayer({
     teamId: team.id,
     name,
@@ -54,7 +52,9 @@ const NewPlayer = ({ navigation }) => {
           name: Yup.string().required(),
           number: Yup.number().required(),
         })}
-        onSubmit={values => addPlayer({ ...values, pictureURI }, navigation.dispatch)}
+        onSubmit={values =>
+          addPlayer({ ...values, pictureURI }, navigation.dispatch)
+        }
         render={({
           values,
           handleSubmit,

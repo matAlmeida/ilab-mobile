@@ -13,19 +13,21 @@ const uda2matrix = (plays, players) => {
     matrix.push(row);
   }
 
-  plays.map(play => Object.keys(play.udas)
-    .map(key => play.udas[key])
-    .map((uda) => {
-      const sender = idMap.find(mapped => mapped.id === uda.senderId);
-      const receiver = idMap.find(mapped => mapped.id === uda.receiverId);
+  plays.map(play =>
+    Object.keys(play.udas)
+      .map(key => play.udas[key])
+      .map(uda => {
+        const sender = idMap.find(mapped => mapped.id === uda.senderId);
+        const receiver = idMap.find(mapped => mapped.id === uda.receiverId);
 
-      matrix[sender.index][receiver.index] += 1;
-    }));
+        matrix[sender.index][receiver.index] += 1;
+      }),
+  );
 
   return matrix;
 };
 
-const matrix2csv = (matrix) => {
+const matrix2csv = matrix => {
   const csv = matrix.reduce((str1, row) => {
     const col = row.reduce((str2, column) => `${str2},${column}`, '');
 

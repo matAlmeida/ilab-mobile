@@ -49,7 +49,9 @@ const NewTeam = ({ navigation }) => {
         validationSchema={Yup.object().shape({
           name: Yup.string().required(),
         })}
-        onSubmit={values => addTeam({ ...values, pictureURI }, navigation.dispatch)}
+        onSubmit={values =>
+          addTeam({ ...values, pictureURI }, navigation.dispatch)
+        }
         render={({
           values,
           handleSubmit,

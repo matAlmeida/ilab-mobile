@@ -10,9 +10,7 @@ import { Container, AddButton, AddButtonText } from './styles';
 import { backAction } from '~/utils/navigation';
 import { insertNewGame } from '~/services/database';
 
-const addGame = ({
-  championship, homeId, awayId, date,
-}, dispatch) => {
+const addGame = ({ championship, homeId, awayId, date }, dispatch) => {
   insertNewGame({
     championshipId: championship.id,
     homeId,
@@ -25,7 +23,7 @@ const addGame = ({
     .catch(error => console.error(error));
 };
 
-const convertTeamToOptions = (teams) => {
+const convertTeamToOptions = teams => {
   if (!teams) {
     return [{ label: null, value: -1 }];
   }

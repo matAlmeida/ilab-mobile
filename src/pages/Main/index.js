@@ -12,9 +12,13 @@ import { withChampionshipData } from './container';
 import ballImage from '~/assets/soccer-ball.jpg';
 
 const Main = ({
-  navigation, championshipsList, onRefresh, refreshing, onDelete,
+  navigation,
+  championshipsList,
+  onRefresh,
+  refreshing,
+  onDelete,
 }) => {
-  const removeItem = (championship) => {
+  const removeItem = championship => {
     Alert.alert(
       'Remover Campeonato',
       `Tem certeza que deseja remover "${championship.name}"?`,

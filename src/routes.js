@@ -1,4 +1,5 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { Animated, Easing } from 'react-native';
 
 import Main from '~/pages/Main';
@@ -18,7 +19,10 @@ const Navigator = createStackNavigator(
     Team: { screen: Team, navigationOptions: { header: null } },
     Game: { screen: Game, navigationOptions: { header: null } },
     Field: { screen: Field, navigationOptions: { header: null } },
-    NewChampionship: { screen: NewChampionship, navigationOptions: { header: null } },
+    NewChampionship: {
+      screen: NewChampionship,
+      navigationOptions: { header: null },
+    },
     NewTeam: { screen: NewTeam, navigationOptions: { header: null } },
     NewGame: { screen: NewGame, navigationOptions: { header: null } },
     NewPlayer: { screen: NewPlayer, navigationOptions: { header: null } },

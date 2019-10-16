@@ -3,7 +3,7 @@ import React from 'react';
 import { getAllChampionships, deleteChampionship } from '~/services/database';
 
 function withChampionshipData(WrappedComponent) {
-  return class extends React.Component {
+  return class ComponentWithChampionshipData extends React.Component {
     state = { championshipsList: [], loadingChampionship: false };
 
     componentDidMount() {
@@ -17,7 +17,7 @@ function withChampionshipData(WrappedComponent) {
       });
     }
 
-    handleDelete = (championship) => {
+    handleDelete = championship => {
       deleteChampionship({ championshipId: championship.id })
         .then(() => {
           this.reloadChampionships();
@@ -28,13 +28,13 @@ function withChampionshipData(WrappedComponent) {
     reloadChampionships = () => {
       this.setState({ loadingChampionship: true });
       getAllChampionships()
-        .then((newChampionshipsList) => {
+        .then(newChampionshipsList => {
           this.setState({
             championshipsList: newChampionshipsList,
             loadingChampionship: false,
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           this.setState({ loadingChampionship: false, championshipsList: [] });
         });

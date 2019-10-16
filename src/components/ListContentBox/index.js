@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import {
   Container,
-  ListBox,
   List,
   EmptyText,
   RefreshButton,
@@ -35,20 +34,20 @@ const ListContentBox = ({
         <HeaderIcon name="add-circle" />
       </HeaderActionButton>
     </HeaderContainer>
-    <ListBox>
-      {data.length > 0 ? (
-        <List
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
-        />
-      ) : (
-        <RefreshButton onPress={onRefresh}>
-          <EmptyText>Nenhum item nessa lista. Recarregar?</EmptyText>
-        </RefreshButton>
-      )}
-    </ListBox>
+    {data.length > 0 ? (
+      <List
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        refreshControl={
+          <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+        }
+      />
+    ) : (
+      <RefreshButton onPress={onRefresh}>
+        <EmptyText>Nenhum item nessa lista. Recarregar?</EmptyText>
+      </RefreshButton>
+    )}
   </Container>
 );
 

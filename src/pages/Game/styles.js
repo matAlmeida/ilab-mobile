@@ -44,7 +44,8 @@ export const TeamButtonBox = styled.View`
 
 export const TeamPlayButton = styled.TouchableOpacity`
   height: 44px;
-  background-color: ${props => (props.disabled ? Colors.lightGray : Colors.tintColor)};
+  background-color: ${props =>
+    props.disabled ? Colors.lightGray : Colors.tintColor};
   justify-content: center;
   align-items: center;
   padding: 0 20px;

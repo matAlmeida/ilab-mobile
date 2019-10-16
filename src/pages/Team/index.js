@@ -12,10 +12,8 @@ import { withTeamData } from './container';
 import playerIcon from '~/assets/player-icon.png';
 import { backAction } from '~/utils/navigation';
 
-const Team = ({
-  playersList, navigation, onRefresh, refreshing, onDelete,
-}) => {
-  const removeItem = (item) => {
+const Team = ({ playersList, navigation, onRefresh, refreshing, onDelete }) => {
+  const removeItem = item => {
     Alert.alert(
       'Remover Jogador',
       `Tem certeza que deseja remover "${item.name}"?`,

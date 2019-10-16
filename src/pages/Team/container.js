@@ -3,7 +3,7 @@ import React from 'react';
 import { getTeam, deletePlayer } from '~/services/database';
 
 function withTeamData(WrappedComponent) {
-  return class extends React.Component {
+  return class ComponentWithTeamData extends React.Component {
     state = { team: {}, loadingTeam: false };
 
     componentDidMount() {
@@ -32,11 +32,11 @@ function withTeamData(WrappedComponent) {
 
       this.setState({ loadingTeam: true });
       getTeam({ teamId: id })
-        .then((team) => {
+        .then(team => {
           navigation.setParams({ team });
           this.setState({ team, loadingTeam: false });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(error);
           this.setState({ loadingTeam: false, team: {} });
         });

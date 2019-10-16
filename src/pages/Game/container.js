@@ -42,7 +42,7 @@ function withTeamData(WrappedComponent) {
         Tempo Final: ${finalTimer}
       `;
 
-      Object.keys(filters).map((filter) => {
+      Object.keys(filters).map(filter => {
         const udaObj = udaEnds.filter(end => end.value === filter);
 
         string += `
@@ -59,14 +59,15 @@ function withTeamData(WrappedComponent) {
 
       let filterString = `${initialTimer}min-${finalTimer}min`;
 
-      Object.keys(typeFilters).map((filter) => {
+      Object.keys(typeFilters).map(filter => {
         if (filters[filter]) {
           filterString += `-${filter}`;
 
           const newPlays = plays.filter(
-            play => play.type === filter
-              && play.finishedAt >= (initialTimer > 0 && initialTimer * 60)
-              && play.finishedAt <= finalTimer * 60,
+            play =>
+              play.type === filter &&
+              play.finishedAt >= (initialTimer > 0 && initialTimer * 60) &&
+              play.finishedAt <= finalTimer * 60,
           );
 
           filteredPlays.push(...newPlays);
@@ -76,9 +77,7 @@ function withTeamData(WrappedComponent) {
       return [filteredPlays, filterString];
     };
 
-    handleExtraction = (option, {
-      game, gameName, team, filters,
-    }) => {
+    handleExtraction = (option, { game, gameName, team, filters }) => {
       let plays = [];
       if (game.homeId === team.id) {
         plays = game.homePlays;
@@ -96,9 +95,9 @@ function withTeamData(WrappedComponent) {
       const udaCsv = this.extractSwitch(option, filteredPlays, team.players);
 
       const pathToWrite = createPath(
-        `ilab-${selectedOption.value}-${team.name.toLowerCase().replace(' ', '-')}-${
-          game.id
-        }-${filterString}.csv`,
+        `ilab-${selectedOption.value}-${team.name
+          .toLowerCase()
+          .replace(' ', '-')}-${game.id}-${filterString}.csv`,
       );
 
       const fileWasCreated = createFile({ path: pathToWrite, data: udaCsv });
@@ -124,15 +123,15 @@ function withTeamData(WrappedComponent) {
 
       this.setState({ loadingTeam: true });
 
-      const homeTeam = await getTeam({ teamId: homeId }).catch((error) => {
+      const homeTeam = await getTeam({ teamId: homeId }).catch(error => {
         console.error(error);
       });
 
-      const awayTeam = await getTeam({ teamId: awayId }).catch((error) => {
+      const awayTeam = await getTeam({ teamId: awayId }).catch(error => {
         console.error(error);
       });
 
-      const game = await getGame({ gameId: id }).catch((error) => {
+      const game = await getGame({ gameId: id }).catch(error => {
         console.error(error);
       });
 

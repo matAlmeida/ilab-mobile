@@ -5,7 +5,11 @@
 
 import React, { Component } from 'react';
 import {
-  Platform, View, PanResponder, Animated, TouchableOpacity,
+  Platform,
+  View,
+  PanResponder,
+  Animated,
+  TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -58,11 +62,14 @@ export default class Draggable extends Component {
     };
 
     this.panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: (e, gestureState) => {
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderGrant: () => {
         if (reverse == false) {
-          this.state.pan.setOffset({ x: this.state._value.x, y: this.state._value.y });
+          this.state.pan.setOffset({
+            x: this.state._value.x,
+            y: this.state._value.y,
+          });
           this.state.pan.setValue({ x: 0, y: 0 });
         }
       },
@@ -77,15 +84,17 @@ export default class Draggable extends Component {
         { listener: onMove },
       ),
       onPanResponderRelease: (e, gestureState) => {
-        if (pressDragRelease) pressDragRelease(this.state._value, e, gestureState);
+        if (pressDragRelease)
+          pressDragRelease(this.state._value, e, gestureState);
         if (reverse === false) this.state.pan.flattenOffset();
         else this.reversePosition();
       },
     });
   }
 
-  componentWillMount() {
-    if (this.props.reverse === false) this.state.pan.addListener(c => (this.state._value = c));
+  componentDidMount() {
+    if (this.props.reverse === false)
+      this.state.pan.addListener(c => this.setState({ _value: c }));
   }
 
   componentWillUnmount() {
@@ -95,9 +104,7 @@ export default class Draggable extends Component {
   }
 
   positionCss = () => {
-    const {
-      renderSize, offsetX, offsetY, x, y, z,
-    } = this.props;
+    const { renderSize, offsetX, offsetY, x, y, z } = this.props;
     return Platform.select({
       ios: {
         zIndex: z != null ? z : 999,
@@ -154,8 +161,7 @@ export default class Draggable extends Component {
             onPress={pressDrag}
             onLongPress={longPressDrag}
             onPressIn={pressInDrag}
-            onPressOut={pressOutDrag}
-          >
+            onPressOut={pressOutDrag}>
             {children}
           </TouchableOpacity>
         </Animated.View>

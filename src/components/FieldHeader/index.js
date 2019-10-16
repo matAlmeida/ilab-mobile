@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Container, HeaderButton, HeaderIcon, HeaderTitle,
-} from './styles';
+import { Container, HeaderButton, HeaderIcon, HeaderTitle } from './styles';
 
 const Header = ({ title, leftIcon, rightIcons }) => (
   <Container>
@@ -13,8 +11,8 @@ const Header = ({ title, leftIcon, rightIcons }) => (
       </HeaderButton>
     )}
     <HeaderTitle>{title}</HeaderTitle>
-    {!!rightIcons
-      && rightIcons.map(icon => (
+    {!!rightIcons &&
+      rightIcons.map(icon => (
         <HeaderButton key={icon.name} onPress={icon.onPress}>
           <HeaderIcon name={icon.name} type={icon.type} />
         </HeaderButton>
@@ -24,7 +22,10 @@ const Header = ({ title, leftIcon, rightIcons }) => (
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-  leftIcon: PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
+  leftIcon: PropTypes.shape({
+    name: PropTypes.string,
+    onPress: PropTypes.func,
+  }),
   rightIcons: PropTypes.arrayOf(
     PropTypes.shape({ name: PropTypes.string, onPress: PropTypes.func }),
   ),

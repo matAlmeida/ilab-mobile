@@ -10,7 +10,7 @@ import Colors from '~/constants/Colors';
 class TextInput extends React.PureComponent {
   state = { visible: false };
 
-  handleChange = (value) => {
+  handleChange = value => {
     const { onChange, name } = this.props;
 
     onChange(name, value);
@@ -24,16 +24,31 @@ class TextInput extends React.PureComponent {
 
   render() {
     const {
-      icon, type, label, value, secure, autoCapitalize = 'none', ...rest
+      icon,
+      type,
+      label,
+      value,
+      secure,
+      autoCapitalize = 'sentences',
+      ...rest
     } = this.props;
 
     const { visible } = this.state;
 
-    const leftIcon = icon ? <Icon name={icon} size={24} color={Colors.tintColor} /> : {};
+    const leftIcon = icon ? (
+      <Icon name={icon} size={24} color={Colors.tintColor} />
+    ) : (
+      {}
+    );
 
     const rightIcon = secure ? (
-      <TouchableWithoutFeedback onPress={() => this.setState({ visible: !visible })}>
-        <Icon name={visible ? 'eye-slash' : 'eye'} size={24} color={Colors.tintColor} />
+      <TouchableWithoutFeedback
+        onPress={() => this.setState({ visible: !visible })}>
+        <Icon
+          name={visible ? 'eye-slash' : 'eye'}
+          size={24}
+          color={Colors.tintColor}
+        />
       </TouchableWithoutFeedback>
     ) : (
       {}
